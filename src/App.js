@@ -7,6 +7,7 @@ import Drinks from './Pages/Drinks';
 import DrinksDetails from './Pages/DrinksDetails';
 import DrinksInProgress from './Pages/DrinksInProgress';
 import Explore from './Pages/Explore';
+import RecipesDetails from './Pages/RecipesDetails';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -17,7 +18,7 @@ function App() {
         <Route exact path="/" component={ Login } />
         <Route exact path="/foods" component={ Foods } />
         <Route exact path="/drinks" component={ Drinks } />
-        {/* <Route exact path="/foods/{id-da-receita}" component={ RecipesDetails } /> */}
+        <Route exact path="/foods/{id-da-receita}" component={ RecipesDetails } />
         <Route exact path="/drinks/{id-da-receita}" component={ DrinksDetails } />
         {/* <Route
           exact
