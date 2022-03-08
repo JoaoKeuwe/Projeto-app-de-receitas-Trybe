@@ -1,4 +1,5 @@
 import React from 'react';
+import Footer from '../Components/Footer';
 import profileIcon from '../images/profileIcon.svg';
 
 function Explore() {
@@ -11,6 +12,7 @@ function Explore() {
 
         <h2 data-testid="page-title">Explore</h2>
       </header>
+      <Footer />
     </div>
   );
 }

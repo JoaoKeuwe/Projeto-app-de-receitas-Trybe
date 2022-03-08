@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Footer from './Footer';
 import ingredientsApi from '../Services/ingredientsApi';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
@@ -97,6 +98,7 @@ function Header(props) {
           </div>
         )}
       </header>
+      <Footer />
     </div>
   );
 }
