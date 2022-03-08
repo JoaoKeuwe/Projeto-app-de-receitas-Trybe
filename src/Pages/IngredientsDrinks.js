@@ -1,4 +1,5 @@
 import React from 'react';
+import Footer from '../Components/Footer';
 import profileIcon from '../images/profileIcon.svg';
 
 function IngredientsDrinks() {
@@ -11,6 +12,7 @@ function IngredientsDrinks() {
 
         <h2 data-testid="page-title">Explore Ingredients</h2>
       </header>
+      <Footer />
     </div>
   );
 }
