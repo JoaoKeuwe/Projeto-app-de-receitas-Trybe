@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Login from './Pages/Login';
 // import DoneRecipes from './Pages/DoneRecipes';
-import Header from './Pages/Header';
+import Header from './Components/Header';
 import ExploreFoods from './Pages/ExploreFoods';
 import Drinks from './Pages/Drinks';
 import ExploreDrinks from './Pages/ExploreDrinks';
