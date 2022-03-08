@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Footer from './Footer';
 import ingredientsApi from '../Services/ingredientsApi';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import Context from '../Context/context';
+import drinksApi from '../Services/drinksApi';
 
 function Header(props) {
   const [screen, setScreen] = useState(false);
-  const [search, setSearch] = useState('');
-  const [radio, setRadio] = useState('');
+  // const [search, setSearch] = useState('');
+  // const [radio, setRadio] = useState('');
+  const { handleRadio, handleSearch, fetchRadio, fetchSearch } = useContext(Context);
   const { title } = props;
   const ClickToProfile = () => {
     const { history } = props;
@@ -17,12 +20,17 @@ function Header(props) {
 
   function hadleChange(e) {
     const { value } = e.target;
-    return setRadio(value);
+    return handleRadio(value);
   }
 
-  async function handleClickApi(searchh, radioo) {
-    const data = await ingredientsApi(searchh, radioo);
-    return data;
+  async function handleClickApi(searchh, radioo, titlee) {
+    if (titlee === 'Drinks') {
+      const data = await drinksApi(searchh, radioo);
+      return data;
+    } if (titlee === 'Foods') {
+      const data = await ingredientsApi(searchh, radioo);
+      return data;
+    }
   }
 
   return (
@@ -37,7 +45,7 @@ function Header(props) {
           <img src={ profileIcon } alt="profile-icon" />
         </button>
 
-        <h1 data-testid="page-title">{title || 'Foods'}</h1>
+        <h1 data-testid="page-title">{title}</h1>
 
         <button
           type="button"
@@ -84,7 +92,7 @@ function Header(props) {
             <button
               type="button"
               data-testid="exec-search-btn"
-              onClick={ () => handleClickApi(search, radio) }
+              onClick={ () => handleClickApi(fetchSearch, fetchRadio, title) }
             >
               Search
             </button>
@@ -93,7 +101,7 @@ function Header(props) {
               type="text"
               data-testid="search-input"
               placeholder="pesquise"
-              onChange={ (e) => setSearch(e.target.value) }
+              onChange={ (e) => handleSearch(e.target.value) }
             />
           </div>
         )}
