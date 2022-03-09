@@ -6,6 +6,7 @@ import Header from '../Components/Header';
 export default function Foods() {
   const { recipes } = useContext(Context);
   const [redirectId, setRedirectId] = useState(false);
+  console.log(recipes);
   function handleRedirect() {
     if (recipes && recipes.length === 1) {
       return setRedirectId(true);
@@ -15,13 +16,16 @@ export default function Foods() {
 
   useEffect(() => {
     handleRedirect();
+    if (recipes === null) {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    }
   });
   return (
     <div>
       <Header
         title="Foods"
       />
-      { recipes.length > 2 && recipes.slice(0, TWELVE).map((recipe, index) => (
+      { recipes && recipes.slice(0, TWELVE).map((recipe, index) => (
         <div
           width="100px"
           key={ recipe.idMeal }
