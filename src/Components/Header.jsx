@@ -11,7 +11,14 @@ import drinksApi from '../Services/drinksApi';
 function Header(props) {
   const [screen, setScreen] = useState(false);
   const [redirect, setRedirect] = useState(false);
-  const { handleRadio, handleSearch, fetchRadio, fetchSearch } = useContext(Context);
+  const {
+    handleRadio,
+    handleSearch,
+    handleRecipes,
+    fetchRadio,
+    fetchSearch,
+
+  } = useContext(Context);
   const { title } = props;
   const ClickToProfile = (boo) => {
     setRedirect(boo);
@@ -25,13 +32,15 @@ function Header(props) {
   async function handleClickApi(searchh, radioo, titlee) {
     if (titlee === 'Drinks') {
       const data = await drinksApi(searchh, radioo);
+      await handleRecipes(data);
       return data;
     } if (titlee === 'Foods') {
       const data = await ingredientsApi(searchh, radioo);
+      await handleRecipes(data);
       return data;
     }
   }
-  console.log(redirect);
+
   return (
     <div>
       <header>
@@ -112,7 +121,6 @@ function Header(props) {
 }
 
 Header.propTypes = {
-  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
   title: PropTypes.string.isRequired,
 };
 
