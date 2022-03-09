@@ -14,7 +14,7 @@ import Nationalities from './Pages/Nationalities';
 import Profile from './Pages/Profile';
 import FavoriteRecipes from './Pages/FavoriteRecipes';
 import DoneRecipes from './Pages/DoneRecipes';
-import RecipesDetails from './Pages/RecipesDetails';
+import FoodsDetails from './Pages/FoodsDetails';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Foods from './Pages/Foods';
@@ -31,11 +31,12 @@ function App() {
         <Route exact path="/explore/foods/ingredients" component={ IngredientsFoods } />
         <Route exact path="/explore/drinks/ingredients" component={ IngredientsDrinks } />
         <Route exact path="/explore/foods/nationalities" component={ Nationalities } />
-        <Route exact path="/foods/{id-da-receita}" component={ RecipesDetails } />
+        <Route exact path="/foods/:id" component={ FoodsDetails } />
         <Route exact path="/profile" component={ Profile } />
         <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
         <Route exact path="/done-recipes" component={ DoneRecipes } />
-        <Route exact path="/drinks/{id-da-receita}" component={ DrinksDetails } />
+        <Route exact path="/drinks/:id" component={ DrinksDetails } />
+        {/* <Route exact path="/drinks/{id-da-receita}" component={  } /> */}
         {/* <Route
           exact
           path="/foods/{id-da-receita}/in-progress"
