@@ -11,6 +11,7 @@ export default function Foods() {
       return setRedirectId(true);
     }
   }
+  const TWELVE = 12;
 
   useEffect(() => {
     handleRedirect();
@@ -20,6 +21,23 @@ export default function Foods() {
       <Header
         title="Foods"
       />
+      { recipes.length > 2 && recipes.slice(0, TWELVE).map((recipe, index) => (
+        <div
+          width="100px"
+          key={ recipe.idMeal }
+          data-testid={ `${index}-recipe-card` }
+        >
+          <img
+            width="100px"
+            src={ recipe.strMealThumb }
+            alt={ recipe.strMeal }
+            data-testid={ `${index}-card-img` }
+          />
+          <p data-testid={ `${index}-card-name` }>
+            { recipe.strMeal }
+          </p>
+        </div>
+      ))}
       { redirectId && <Redirect to={ `/foods/${recipes[0].idMeal}` } /> }
     </div>
   );
