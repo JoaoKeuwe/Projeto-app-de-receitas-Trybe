@@ -39,6 +39,8 @@ function Header(props) {
       await handleRecipes(data);
       return data;
     }
+    await handleRecipes(data);
+    return data;
   }
 
   return (

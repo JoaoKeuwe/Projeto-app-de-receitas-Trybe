@@ -13,14 +13,18 @@ function Drinks() {
   }
   const TWELVE = 12;
 
-  useEffect(() => handleRedirect());
+  useEffect(() => {
+    handleRedirect();
+    if (recipes === null) {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    }
+  });
 
   console.log(recipes);
   return (
     <div>
       <Header title="Drinks" />
-      { recipes.length > 2 && recipes.slice(0, TWELVE).map((recipe, index) => (
-        // data-testid="0-recipe-card"
+      { recipes && recipes.slice(0, TWELVE).map((recipe, index) => (
         <div width="100px" key={ recipe.idDrink } data-testid={ `${index}-recipe-card` }>
           <img
             width="100px"
