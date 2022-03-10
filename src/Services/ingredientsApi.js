@@ -29,3 +29,10 @@ export async function foodsApiMount() {
   const data = await response.json();
   return data;
 }
+
+export async function foodsApiCategory() {
+  const URL_CATEGORY = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
+  const response = await fetch(URL_CATEGORY);
+  const data = await response.json();
+  return data;
+}

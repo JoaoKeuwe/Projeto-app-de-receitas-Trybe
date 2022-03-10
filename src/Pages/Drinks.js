@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import { drinksApiMonunt } from '../Services/drinksApi';
+import { drinksApiMonunt, drinksApiCategory } from '../Services/drinksApi';
 import Context from '../Context/context';
 import Header from '../Components/Header';
 
@@ -8,6 +8,11 @@ function Drinks() {
   const { recipes } = useContext(Context);
   const [drinksMount, setDrinksMount] = useState();
   const [redirectId, setRedirectId] = useState(false);
+  const [drinkCategory, setDrinkCategory] = useState('');
+
+  function handleDrinkCategory() {
+    drinksApiCategory().then((dataCategory) => setDrinkCategory(dataCategory.drinks));
+  }
 
   function handleDrinks() {
     drinksApiMonunt().then((data) => setDrinksMount(data.drinks));
@@ -19,8 +24,10 @@ function Drinks() {
     }
   }
   const TWELVE = 12;
+  const FIVE = 5;
   useEffect(() => {
     handleDrinks();
+    handleDrinkCategory();
   }, []);
   useEffect(() => {
     handleRedirect();
@@ -31,6 +38,15 @@ function Drinks() {
   return (
     <div>
       <Header title="Drinks" />
+      { drinkCategory && drinkCategory.slice(0, FIVE).map(({ strCategory }) => (
+        <button
+          key={ strCategory }
+          type="button"
+          data-testid={ `${strCategory}-category-filter` }
+        >
+          { strCategory }
+        </button>
+      )) }
       { recipes && recipes.slice(0, TWELVE).map((recipe, index) => (
         <div width="100px" key={ recipe.idDrink } data-testid={ `${index}-recipe-card` }>
           <img

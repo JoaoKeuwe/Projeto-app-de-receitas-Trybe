@@ -29,3 +29,10 @@ export async function drinksApiMonunt() {
   const data = await response.json();
   return data;
 }
+
+export async function drinksApiCategory() {
+  const URL_CATEGORY = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
+  const response = await fetch(URL_CATEGORY);
+  const data = await response.json();
+  return data;
+}
