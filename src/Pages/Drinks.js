@@ -14,6 +14,7 @@ function Drinks() {
   const [redirectId, setRedirectId] = useState(false);
   const [drinkCategory, setDrinkCategory] = useState('');
   const [listDrinkCategory, setListDrinkCategory] = useState([]);
+  const [toggle, setToggle] = useState(false);
 
   function handleDrinkCategory() {
     drinksApiCategory().then((dataCategory) => setDrinkCategory(dataCategory.drinks));
@@ -27,6 +28,10 @@ function Drinks() {
     handleClickCategoryDrinks(category)
       .then((drink) => setListDrinkCategory(drink.drinks));
     setDrinksMount('');
+    setToggle((prevState) => !prevState);
+    if (toggle === true) {
+      handleDrinks();
+    }
   }
 
   function handleRedirect() {
@@ -88,7 +93,8 @@ function Drinks() {
             </p>
           </div>
         ))}
-      { listDrinkCategory && listDrinkCategory.slice(0, TWELVE).map((drinks, index) => (
+      { toggle
+      && listDrinkCategory && listDrinkCategory.slice(0, TWELVE).map((drinks, index) => (
         <div width="100px" key={ drinks.idDrink } data-testid={ `${index}-recipe-card` }>
           <img
             width="100px"

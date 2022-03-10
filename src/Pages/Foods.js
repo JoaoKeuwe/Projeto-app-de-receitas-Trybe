@@ -14,6 +14,7 @@ export default function Foods() {
   const [redirectId, setRedirectId] = useState(false);
   const [foodCategory, setFoodCategory] = useState('');
   const [listFoodOfCategory, setListFoodOfCategory] = useState([]);
+  const [toggle, setToggle] = useState(false);
 
   function handleFoodCategory() {
     foodsApiCategory().then((dataCategory) => setFoodCategory(dataCategory.meals));
@@ -26,6 +27,10 @@ export default function Foods() {
   function handleClickButton(category) {
     handleClickCategory(category).then((food) => setListFoodOfCategory(food.meals));
     setFoodsMount('');
+    setToggle((prevState) => !prevState);
+    if (toggle === true) {
+      handleFoods();
+    }
   }
 
   function handleRedirect() {
@@ -97,7 +102,8 @@ export default function Foods() {
             </p>
           </div>
         ))}
-      { listFoodOfCategory && listFoodOfCategory.slice(0, TWELVE).map((food, index) => (
+      { toggle
+      && listFoodOfCategory && listFoodOfCategory.slice(0, TWELVE).map((food, index) => (
         <div
           width="100px"
           key={ food.idMeal }
