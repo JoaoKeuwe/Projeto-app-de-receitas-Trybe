@@ -14,6 +14,7 @@ function Provider({ children }) {
     if (param && Object.keys(param).includes('meals')) {
       return setRecipes(param.meals);
     }
+    return setRecipes(param);
   }
 
   function handleSearch(search) {

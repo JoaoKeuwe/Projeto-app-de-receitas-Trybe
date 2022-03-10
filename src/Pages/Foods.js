@@ -2,18 +2,27 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import Context from '../Context/context';
 import Header from '../Components/Header';
+import { foodsApiMount } from '../Services/ingredientsApi';
 
 export default function Foods() {
   const { recipes } = useContext(Context);
-  const [redirectId, setRedirectId] = useState(false);
   console.log(recipes);
+  const [foodsMount, setFoodsMount] = useState();
+  const [redirectId, setRedirectId] = useState(false);
+
+  function handleFoods() {
+    foodsApiMount().then((data) => setFoodsMount(data.meals));
+  }
+
   function handleRedirect() {
     if (recipes && recipes.length === 1) {
       return setRedirectId(true);
     }
   }
   const TWELVE = 12;
-
+  useEffect(() => {
+    handleFoods();
+  }, []);
   useEffect(() => {
     handleRedirect();
     if (recipes === null) {
@@ -42,6 +51,25 @@ export default function Foods() {
           </p>
         </div>
       ))}
+      { recipes === ''
+        && foodsMount
+        && foodsMount.slice(0, TWELVE).map((food, index) => (
+          <div
+            width="100px"
+            key={ food.idMeal }
+            data-testid={ `${index}-recipe-card` }
+          >
+            <img
+              width="100px"
+              src={ food.strMealThumb }
+              alt={ food.strMeal }
+              data-testid={ `${index}-card-img` }
+            />
+            <p data-testid={ `${index}-card-name` }>
+              { food.strMeal }
+            </p>
+          </div>
+        ))}
       { redirectId && <Redirect to={ `/foods/${recipes[0].idMeal}` } /> }
     </div>
   );

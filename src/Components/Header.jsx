@@ -2,11 +2,11 @@ import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import Footer from './Footer';
-import ingredientsApi from '../Services/ingredientsApi';
+import { ingredientsApi } from '../Services/ingredientsApi';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import Context from '../Context/context';
-import drinksApi from '../Services/drinksApi';
+import { drinksApi } from '../Services/drinksApi';
 
 function Header(props) {
   const [screen, setScreen] = useState(false);
@@ -39,8 +39,6 @@ function Header(props) {
       await handleRecipes(data);
       return data;
     }
-    await handleRecipes(data);
-    return data;
   }
 
   return (
