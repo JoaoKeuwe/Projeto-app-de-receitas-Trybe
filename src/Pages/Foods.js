@@ -15,7 +15,8 @@ export default function Foods() {
   const [foodCategory, setFoodCategory] = useState('');
   const [listFoodOfCategory, setListFoodOfCategory] = useState([]);
   const [toggle, setToggle] = useState(false);
-
+  const [categoryState, setCategoryState] = useState('');
+  console.log(toggle);
   function handleFoodCategory() {
     foodsApiCategory().then((dataCategory) => setFoodCategory(dataCategory.meals));
   }
@@ -25,10 +26,11 @@ export default function Foods() {
   }
 
   function handleClickButton(category) {
+    setCategoryState(category);
     handleClickCategory(category).then((food) => setListFoodOfCategory(food.meals));
     setFoodsMount('');
     setToggle((prevState) => !prevState);
-    if (toggle === true) {
+    if (categoryState === category && toggle === true) {
       handleFoods();
     }
   }
@@ -102,8 +104,7 @@ export default function Foods() {
             </p>
           </div>
         ))}
-      { toggle
-      && listFoodOfCategory && listFoodOfCategory.slice(0, TWELVE).map((food, index) => (
+      {listFoodOfCategory && listFoodOfCategory.slice(0, TWELVE).map((food, index) => (
         <div
           width="100px"
           key={ food.idMeal }
