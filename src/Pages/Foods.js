@@ -2,13 +2,18 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import Context from '../Context/context';
 import Header from '../Components/Header';
-import { foodsApiMount, foodsApiCategory } from '../Services/ingredientsApi';
+import {
+  foodsApiMount,
+  foodsApiCategory,
+  handleClickCategory,
+} from '../Services/ingredientsApi';
 
 export default function Foods() {
   const { recipes } = useContext(Context);
   const [foodsMount, setFoodsMount] = useState();
   const [redirectId, setRedirectId] = useState(false);
   const [foodCategory, setFoodCategory] = useState('');
+  const [listFoodOfCategory, setListFoodOfCategory] = useState([]);
 
   function handleFoodCategory() {
     foodsApiCategory().then((dataCategory) => setFoodCategory(dataCategory.meals));
@@ -16,6 +21,11 @@ export default function Foods() {
 
   function handleFoods() {
     foodsApiMount().then((data) => setFoodsMount(data.meals));
+  }
+
+  function handleClickButton(category) {
+    handleClickCategory(category).then((food) => setListFoodOfCategory(food.meals));
+    setFoodsMount('');
   }
 
   function handleRedirect() {
@@ -45,6 +55,8 @@ export default function Foods() {
           key={ strCategory }
           type="button"
           data-testid={ `${strCategory}-category-filter` }
+          value={ strCategory }
+          onClick={ (e) => handleClickButton(e.target.value) }
         >
           { strCategory }
         </button>
@@ -85,6 +97,23 @@ export default function Foods() {
             </p>
           </div>
         ))}
+      { listFoodOfCategory && listFoodOfCategory.slice(0, TWELVE).map((food, index) => (
+        <div
+          width="100px"
+          key={ food.idMeal }
+          data-testid={ `${index}-recipe-card` }
+        >
+          <img
+            width="100px"
+            src={ food.strMealThumb }
+            alt={ food.strMeal }
+            data-testid={ `${index}-card-img` }
+          />
+          <p data-testid={ `${index}-card-name` }>
+            { food.strMeal }
+          </p>
+        </div>
+      )) }
       { redirectId && <Redirect to={ `/foods/${recipes[0].idMeal}` } /> }
     </div>
   );

@@ -1,6 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import { drinksApiMonunt, drinksApiCategory } from '../Services/drinksApi';
+import {
+  drinksApiMonunt,
+  drinksApiCategory,
+  handleClickCategoryDrinks,
+} from '../Services/drinksApi';
 import Context from '../Context/context';
 import Header from '../Components/Header';
 
@@ -9,6 +13,7 @@ function Drinks() {
   const [drinksMount, setDrinksMount] = useState();
   const [redirectId, setRedirectId] = useState(false);
   const [drinkCategory, setDrinkCategory] = useState('');
+  const [listDrinkCategory, setListDrinkCategory] = useState([]);
 
   function handleDrinkCategory() {
     drinksApiCategory().then((dataCategory) => setDrinkCategory(dataCategory.drinks));
@@ -16,6 +21,12 @@ function Drinks() {
 
   function handleDrinks() {
     drinksApiMonunt().then((data) => setDrinksMount(data.drinks));
+  }
+
+  function handleClickButton(category) {
+    handleClickCategoryDrinks(category)
+      .then((drink) => setListDrinkCategory(drink.drinks));
+    setDrinksMount('');
   }
 
   function handleRedirect() {
@@ -43,6 +54,8 @@ function Drinks() {
           key={ strCategory }
           type="button"
           data-testid={ `${strCategory}-category-filter` }
+          value={ strCategory }
+          onClick={ (e) => handleClickButton(e.target.value) }
         >
           { strCategory }
         </button>
@@ -75,6 +88,19 @@ function Drinks() {
             </p>
           </div>
         ))}
+      { listDrinkCategory && listDrinkCategory.slice(0, TWELVE).map((drinks, index) => (
+        <div width="100px" key={ drinks.idDrink } data-testid={ `${index}-recipe-card` }>
+          <img
+            width="100px"
+            src={ drinks.strDrinkThumb }
+            alt={ drinks.strDrink }
+            data-testid={ `${index}-card-img` }
+          />
+          <p data-testid={ `${index}-card-name` }>
+            { drinks.strDrink }
+          </p>
+        </div>
+      ))}
       { redirectId && <Redirect to={ `/drinks/${recipes[0].idDrink}` } /> }
     </div>
   );

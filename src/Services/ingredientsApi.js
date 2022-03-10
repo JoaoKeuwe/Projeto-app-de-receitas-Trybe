@@ -36,3 +36,10 @@ export async function foodsApiCategory() {
   const data = await response.json();
   return data;
 }
+
+export async function handleClickCategory(category) {
+  const URL_FOODS_CATEGORY = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`;
+  const response = await fetch(URL_FOODS_CATEGORY);
+  const data = await response.json();
+  return data;
+}

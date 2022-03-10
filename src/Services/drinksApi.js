@@ -36,3 +36,10 @@ export async function drinksApiCategory() {
   const data = await response.json();
   return data;
 }
+
+export async function handleClickCategoryDrinks(category) {
+  const URL_DRINKS_CAT = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`;
+  const response = await fetch(URL_DRINKS_CAT);
+  const data = await response.json();
+  return data;
+}
