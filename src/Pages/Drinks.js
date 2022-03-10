@@ -15,6 +15,7 @@ function Drinks() {
   const [drinkCategory, setDrinkCategory] = useState('');
   const [listDrinkCategory, setListDrinkCategory] = useState([]);
   const [toggle, setToggle] = useState(false);
+  const [categoryState, setCategoryState] = useState('');
 
   function handleDrinkCategory() {
     drinksApiCategory().then((dataCategory) => setDrinkCategory(dataCategory.drinks));
@@ -25,11 +26,12 @@ function Drinks() {
   }
 
   function handleClickButton(category) {
+    setCategoryState(category);
     handleClickCategoryDrinks(category)
       .then((drink) => setListDrinkCategory(drink.drinks));
     setDrinksMount('');
     setToggle((prevState) => !prevState);
-    if (toggle === true) {
+    if (categoryState === category && toggle === true) {
       handleDrinks();
     }
   }
@@ -93,8 +95,7 @@ function Drinks() {
             </p>
           </div>
         ))}
-      { toggle
-      && listDrinkCategory && listDrinkCategory.slice(0, TWELVE).map((drinks, index) => (
+      { listDrinkCategory && listDrinkCategory.slice(0, TWELVE).map((drinks, index) => (
         <div width="100px" key={ drinks.idDrink } data-testid={ `${index}-recipe-card` }>
           <img
             width="100px"
