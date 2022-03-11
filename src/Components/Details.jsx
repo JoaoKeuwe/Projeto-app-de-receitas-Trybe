@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { Carousel, CarouselItem } from 'react-bootstrap';
 import { mealID, drinkID } from '../Services/fetchID';
+import { drinksApiMonunt } from '../Services/drinksApi';
+import { foodsApiMount } from '../Services/ingredientsApi';
 import IngredientMeasure from '../Services/IngredientMeasure';
+import RecomendationCard from './RecomendationCard';
+import '../styles/startRecipe.css';
 
 export default function Details() {
   const [meal, setMeal] = useState();
@@ -8,6 +13,9 @@ export default function Details() {
   const [recipe, setRecipe] = useState([]);
   const [URLvideo, setURLvideo] = useState('');
   const [ingredients, setIngredients] = useState();
+  const [recomendations, setRecomendations] = useState();
+  const NUM = 6;
+
   // const [Measures, setMeasures] = useState();
 
   async function fetchConditional() {
@@ -16,10 +24,12 @@ export default function Details() {
       const data = url.split('foods/');
       const idNum = data[1];
       const x = await mealID(idNum);
+      const y = await drinksApiMonunt();
+      const { drinks } = y;
+      setRecomendations(drinks);
       const { meals } = x;
       setRecipe(meals);
       const arr = IngredientMeasure(meals);
-      console.log(arr);
       setIngredients(arr);
       const ID = (meals[0].strYoutube);
       const split = ID.split('?v=');
@@ -31,6 +41,9 @@ export default function Details() {
       const idNum = data[1];
       const x = await drinkID(idNum);
       const { drinks } = x;
+      const y = await foodsApiMount();
+      const { meals } = y;
+      setRecomendations(meals);
       const arr = IngredientMeasure(drinks);
       setIngredients(arr);
       setRecipe(drinks);
@@ -47,6 +60,7 @@ export default function Details() {
       { drink !== undefined && recipe.map((data, index) => (
         <div key={ index }>
           <img
+            width="100px"
             data-testid="recipe-photo"
             alt="recipe"
             src={ data.strDrinkThumb }
@@ -91,15 +105,26 @@ export default function Details() {
           >
             { data.strInstructions }
           </p>
-          <p
-            data-testid={ `${index}-recomendation-card` }
-          />
+          <Carousel>
+            {
+              recomendations && recomendations.slice(0, NUM).map((rcard, rindex) => (
+                <CarouselItem key={ rindex }>
+                  <RecomendationCard
+                    key={ rindex }
+                    index={ rindex }
+                    recipe={ rcard }
+                  />
+                </CarouselItem>
+              ))
+            }
+          </Carousel>
           <button
+            className="start-recipe"
             type="button"
             data-testid="start-recipe-btn"
             onClick={ () => { console.log(ingredients); } }
           >
-            Iniciar a Receita
+            Start Recipe
           </button>
         </div>
       ))}
@@ -152,20 +177,32 @@ export default function Details() {
           >
             { data.strInstructions }
           </p>
-          <p
-            data-testid={ `${index}-recomendation-card` }
-          />
+          <Carousel>
+            {
+              recomendations
+              && recomendations.slice(0, (NUM)).map((rcardd, rindexx) => (
+                <CarouselItem key={ rindexx }>
+                  <RecomendationCard
+                    key={ rindexx }
+                    recipe={ rcardd }
+                    index={ rindexx }
+                  />
+                </CarouselItem>
+              ))
+            }
+          </Carousel>
           <iframe
             title="iframe"
             data-testid="video"
             src={ `https://www.youtube.com/embed/${URLvideo}` }
           />
           <button
+            className="start-recipe"
             type="button"
             data-testid="start-recipe-btn"
             onClick={ () => { console.log(ingredients); } }
           >
-            Iniciar a Receita
+            Start Recipe
           </button>
         </div>
       ))}
