@@ -7,6 +7,7 @@ import {
   foodsApiCategory,
   handleClickCategory,
 } from '../Services/ingredientsApi';
+import RecipeCard from '../Components/RecipeCard';
 
 export default function Foods() {
   const { recipes } = useContext(Context);
@@ -16,7 +17,7 @@ export default function Foods() {
   const [listFoodOfCategory, setListFoodOfCategory] = useState([]);
   const [toggle, setToggle] = useState(false);
   const [categoryState, setCategoryState] = useState('');
-  console.log(toggle);
+
   function handleFoodCategory() {
     foodsApiCategory().then((dataCategory) => setFoodCategory(dataCategory.meals));
   }
@@ -52,6 +53,16 @@ export default function Foods() {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
     }
   });
+  function handleRecipeCard(food, index) {
+    return (
+      <RecipeCard
+        key={ food.idMeal }
+        index={ index }
+        recipe={ food }
+        recipeType="food"
+      />
+    );
+  }
   return (
     <div>
       <Header
@@ -68,58 +79,17 @@ export default function Foods() {
           { strCategory }
         </button>
       )) }
-      { recipes && recipes.slice(0, TWELVE).map((recipe, index) => (
-        <div
-          width="100px"
-          key={ recipe.idMeal }
-          data-testid={ `${index}-recipe-card` }
-        >
-          <img
-            width="100px"
-            src={ recipe.strMealThumb }
-            alt={ recipe.strMeal }
-            data-testid={ `${index}-card-img` }
-          />
-          <p data-testid={ `${index}-card-name` }>
-            { recipe.strMeal }
-          </p>
-        </div>
+      { recipes
+      && recipes.slice(0, TWELVE).map((food, index) => (
+        handleRecipeCard(food, index)
       ))}
       { recipes === ''
         && foodsMount
         && foodsMount.slice(0, TWELVE).map((food, index) => (
-          <div
-            width="100px"
-            key={ food.idMeal }
-            data-testid={ `${index}-recipe-card` }
-          >
-            <img
-              width="100px"
-              src={ food.strMealThumb }
-              alt={ food.strMeal }
-              data-testid={ `${index}-card-img` }
-            />
-            <p data-testid={ `${index}-card-name` }>
-              { food.strMeal }
-            </p>
-          </div>
+          handleRecipeCard(food, index)
         ))}
       {listFoodOfCategory && listFoodOfCategory.slice(0, TWELVE).map((food, index) => (
-        <div
-          width="100px"
-          key={ food.idMeal }
-          data-testid={ `${index}-recipe-card` }
-        >
-          <img
-            width="100px"
-            src={ food.strMealThumb }
-            alt={ food.strMeal }
-            data-testid={ `${index}-card-img` }
-          />
-          <p data-testid={ `${index}-card-name` }>
-            { food.strMeal }
-          </p>
-        </div>
+        handleRecipeCard(food, index)
       )) }
       { redirectId && <Redirect to={ `/foods/${recipes[0].idMeal}` } /> }
     </div>
