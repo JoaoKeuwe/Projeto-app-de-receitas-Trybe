@@ -107,6 +107,7 @@ export default function Details() {
         <div key={ index }>
 
           <img
+            width="100px"
             data-testid="recipe-photo"
             alt="recipe"
             src={ data.strMealThumb }

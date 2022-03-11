@@ -63,7 +63,7 @@ export default function Foods() {
         key={ food.idMeal }
         index={ index }
         recipe={ food }
-        recipeType="food"
+        recipeType="foods"
       />
     );
   }
