@@ -7,6 +7,7 @@ import {
 } from '../Services/drinksApi';
 import Context from '../Context/context';
 import Header from '../Components/Header';
+import RecipeCard from '../Components/RecipeCard';
 
 function Drinks() {
   const { recipes } = useContext(Context);
@@ -53,6 +54,16 @@ function Drinks() {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
     }
   });
+  function handleRecipeCard(drink, index) {
+    return (
+      <RecipeCard
+        key={ drink.idDrink }
+        index={ index }
+        recipe={ drink }
+        recipeType="Drink"
+      />
+    );
+  }
   return (
     <div>
       <Header title="Drinks" />
@@ -67,46 +78,16 @@ function Drinks() {
           { strCategory }
         </button>
       )) }
-      { recipes && recipes.slice(0, TWELVE).map((recipe, index) => (
-        <div width="100px" key={ recipe.idDrink } data-testid={ `${index}-recipe-card` }>
-          <img
-            width="100px"
-            src={ recipe.strDrinkThumb }
-            alt={ recipe.strDrink }
-            data-testid={ `${index}-card-img` }
-          />
-          <p data-testid={ `${index}-card-name` }>
-            { recipe.strDrink }
-          </p>
-        </div>
+      { recipes && recipes.slice(0, TWELVE).map((drink, index) => (
+        handleRecipeCard(drink, index)
       ))}
       { recipes === ''
         && drinksMount
         && drinksMount.slice(0, TWELVE).map((drink, index) => (
-          <div width="100px" key={ drink.idDrink } data-testid={ `${index}-recipe-card` }>
-            <img
-              width="100px"
-              src={ drink.strDrinkThumb }
-              alt={ drink.strDrink }
-              data-testid={ `${index}-card-img` }
-            />
-            <p data-testid={ `${index}-card-name` }>
-              { drink.strDrink }
-            </p>
-          </div>
+          handleRecipeCard(drink, index)
         ))}
-      { listDrinkCategory && listDrinkCategory.slice(0, TWELVE).map((drinks, index) => (
-        <div width="100px" key={ drinks.idDrink } data-testid={ `${index}-recipe-card` }>
-          <img
-            width="100px"
-            src={ drinks.strDrinkThumb }
-            alt={ drinks.strDrink }
-            data-testid={ `${index}-card-img` }
-          />
-          <p data-testid={ `${index}-card-name` }>
-            { drinks.strDrink }
-          </p>
-        </div>
+      { listDrinkCategory && listDrinkCategory.slice(0, TWELVE).map((drink, index) => (
+        handleRecipeCard(drink, index)
       ))}
       { redirectId && <Redirect to={ `/drinks/${recipes[0].idDrink}` } /> }
     </div>
