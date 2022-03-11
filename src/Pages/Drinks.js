@@ -37,6 +37,10 @@ function Drinks() {
     }
   }
 
+  function handleButtonAll() {
+    handleDrinks();
+  }
+
   function handleRedirect() {
     if (recipes && recipes.length === 1) {
       return setRedirectId(true);
@@ -67,6 +71,14 @@ function Drinks() {
   return (
     <div>
       <Header title="Drinks" />
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        value="All"
+        onClick={ () => handleButtonAll() }
+      >
+        All
+      </button>
       { drinkCategory && drinkCategory.slice(0, FIVE).map(({ strCategory }) => (
         <button
           key={ strCategory }
