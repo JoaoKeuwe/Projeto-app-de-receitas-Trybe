@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import {
   drinksApiMonunt,
   drinksApiCategory,
@@ -60,12 +60,14 @@ function Drinks() {
   });
   function handleRecipeCard(drink, index) {
     return (
-      <RecipeCard
-        key={ drink.idDrink }
-        index={ index }
-        recipe={ drink }
-        recipeType="Drink"
-      />
+      <Link key={ drink.idDrink } to={ `/drinks/${drink.idDrink}` }>
+        <RecipeCard
+          key={ drink.idDrink }
+          index={ index }
+          recipe={ drink }
+          recipeType="drinks"
+        />
+      </Link>
     );
   }
   return (
