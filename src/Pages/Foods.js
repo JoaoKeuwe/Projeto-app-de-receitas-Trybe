@@ -36,6 +36,10 @@ export default function Foods() {
     }
   }
 
+  function handleButtonAll() {
+    handleFoods();
+  }
+
   function handleRedirect() {
     if (recipes && recipes.length === 1) {
       return setRedirectId(true);
@@ -68,6 +72,14 @@ export default function Foods() {
       <Header
         title="Foods"
       />
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        value="All"
+        onClick={ () => handleButtonAll() }
+      >
+        All
+      </button>
       { foodCategory && foodCategory.slice(0, FIVE).map(({ strCategory }) => (
         <button
           key={ strCategory }
