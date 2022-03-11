@@ -1,7 +1,8 @@
 import React from 'react';
-import Header from '../components/Header';
+import Header from '../Components/Header';
 
-export default function Foods() {
+export default function Foods(props) {
+  console.log(props);
   return (
     <div>
       <Header

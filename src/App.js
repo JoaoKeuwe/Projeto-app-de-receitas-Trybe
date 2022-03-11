@@ -17,15 +17,14 @@ import DoneRecipes from './Pages/DoneRecipes';
 import RecipesDetails from './Pages/RecipesDetails';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import Header from './components/Header';
+import Foods from './Pages/Foods';
 
 function App() {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={ Login } />
-        <Route exact path="/foods" component={ Header } />
+        <Route exact path="/foods" component={ Foods } />
         <Route exact path="/drinks" component={ Drinks } />
         <Route exact path="/explore/foods" component={ ExploreFoods } />
         <Route exact path="/explore/drinks" component={ ExploreDrinks } />

@@ -1,5 +1,5 @@
 import React from 'react';
-import Footer from '../components/Footer';
+import Footer from '../Components/Footer';
 import profileIcon from '../images/profileIcon.svg';
 
 function ExploreFoods() {
