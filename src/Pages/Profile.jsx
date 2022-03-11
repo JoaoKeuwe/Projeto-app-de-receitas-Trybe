@@ -4,9 +4,9 @@ import Footer from '../Components/Footer';
 import profileIcon from '../images/profileIcon.svg';
 
 function Profile() {
-  const getEmail = localStorage.getItem('user');
-  const test = JSON.parse(getEmail);
-  const { email } = test;
+  const getEmail = JSON.parse(localStorage.getItem('user')) || { email: 'email' };
+  /* const test = (getEmail); */
+  const test = getEmail;
   const history = useHistory();
 
   function removeLocalStorage() {
@@ -18,6 +18,7 @@ function Profile() {
     localStorage.removeItem('inProgressRecipes');
     history.push('/');
   }
+  console.log(test);
 
   function doneRecipes() {
     history.push('/done-recipes');
@@ -30,7 +31,7 @@ function Profile() {
           <img src={ profileIcon } alt="profileIcon" data-testid="profile-top-btn" />
         </button>
         <div>
-          <h1 data-testid="profile-email">{email}</h1>
+          <h1 data-testid="profile-email">{test.email }</h1>
 
           <button
             type="button"
