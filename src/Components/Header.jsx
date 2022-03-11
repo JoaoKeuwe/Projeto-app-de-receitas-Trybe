@@ -1,21 +1,27 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import Footer from './Footer';
-import ingredientsApi from '../Services/ingredientsApi';
+import { ingredientsApi } from '../Services/ingredientsApi';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import Context from '../Context/context';
-import drinksApi from '../Services/drinksApi';
+import { drinksApi } from '../Services/drinksApi';
 
 function Header(props) {
   const [screen, setScreen] = useState(false);
-  // const [search, setSearch] = useState('');
-  // const [radio, setRadio] = useState('');
-  const { handleRadio, handleSearch, fetchRadio, fetchSearch } = useContext(Context);
+  const [redirect, setRedirect] = useState(false);
+  const {
+    handleRadio,
+    handleSearch,
+    handleRecipes,
+    fetchRadio,
+    fetchSearch,
+
+  } = useContext(Context);
   const { title } = props;
-  const ClickToProfile = () => {
-    const { history } = props;
-    history.push('/profile');
+  const ClickToProfile = (boo) => {
+    setRedirect(boo);
   };
 
   function hadleChange(e) {
@@ -26,9 +32,11 @@ function Header(props) {
   async function handleClickApi(searchh, radioo, titlee) {
     if (titlee === 'Drinks') {
       const data = await drinksApi(searchh, radioo);
+      await handleRecipes(data);
       return data;
     } if (titlee === 'Foods') {
       const data = await ingredientsApi(searchh, radioo);
+      await handleRecipes(data);
       return data;
     }
   }
@@ -40,7 +48,7 @@ function Header(props) {
           type="button"
           data-testid="profile-top-btn"
           src={ profileIcon }
-          onClick={ ClickToProfile }
+          onClick={ () => ClickToProfile(true) }
         >
           <img src={ profileIcon } alt="profile-icon" />
         </button>
@@ -107,12 +115,12 @@ function Header(props) {
         )}
       </header>
       <Footer />
+      { redirect && <Redirect to="/profile" />}
     </div>
   );
 }
 
 Header.propTypes = {
-  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
   title: PropTypes.string.isRequired,
 };
 

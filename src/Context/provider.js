@@ -5,6 +5,18 @@ import Context from './context';
 function Provider({ children }) {
   const [fetchSearch, setFetchSearch] = useState('');
   const [fetchRadio, setFetchRadio] = useState('');
+  const [recipes, setRecipes] = useState('');
+
+  function handleRecipes(param) {
+    if (param && Object.keys(param).includes('drinks')) {
+      return setRecipes(param.drinks);
+    }
+    if (param && Object.keys(param).includes('meals')) {
+      return setRecipes(param.meals);
+    }
+    return setRecipes(param);
+  }
+
   function handleSearch(search) {
     return setFetchSearch(search);
   }
@@ -14,8 +26,10 @@ function Provider({ children }) {
   const context = {
     handleRadio,
     handleSearch,
+    handleRecipes,
     fetchRadio,
     fetchSearch,
+    recipes,
   };
   return (
     <Context.Provider value={ context }>

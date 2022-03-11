@@ -1,10 +1,10 @@
 import React from 'react';
 import Details from '../Components/Details';
 
-function DrinksDetails() {
+function FoodsDetails() {
   return (
     <Details />
   );
 }
 
-export default DrinksDetails;
+export default FoodsDetails;
