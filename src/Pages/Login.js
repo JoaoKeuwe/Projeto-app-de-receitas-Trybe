@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import '../styles/login.css';
 
 function Login(props) {
   const [disable, setDisable] = useState(true);
@@ -32,8 +33,9 @@ function Login(props) {
   };
 
   return (
-    <div>
-      <form>
+    <div className="login">
+      <form className="form">
+        <h1>Login</h1>
         <label htmlFor="email-input">
           <input
             data-testid="email-input"
@@ -54,6 +56,7 @@ function Login(props) {
           />
         </label>
         <button
+          className="btnLogin"
           type="submit"
           data-testid="login-submit-btn"
           disabled={ disable }

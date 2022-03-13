@@ -7,6 +7,7 @@ import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import Context from '../Context/context';
 import { drinksApi } from '../Services/drinksApi';
+import '../styles/header.css';
 
 function Header(props) {
   const [screen, setScreen] = useState(false);
@@ -43,7 +44,7 @@ function Header(props) {
 
   return (
     <div>
-      <header>
+      <header className="header">
         <button
           type="button"
           data-testid="profile-top-btn"
