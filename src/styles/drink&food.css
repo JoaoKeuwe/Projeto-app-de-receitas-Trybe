@@ -1,9 +1,26 @@
 .box {
-  align-items: center;
   display: block;
-  justify-content: center;
+  width: 100%;
 }
 
 .same {
-  width: 33%;
+   width: 30%;
+  margin: 8px;
+}
+
+.pictures{
+  display:flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 9%; 
+}
+
+a {
+  display:flex;
+  text-align: center;
+  font-size: 20px;
+}
+
+img {
+  border-radius: 10px;
 }

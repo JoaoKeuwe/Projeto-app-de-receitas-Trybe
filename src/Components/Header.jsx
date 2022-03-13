@@ -64,7 +64,7 @@ function Header(props) {
           <img src={ searchIcon } alt="searchIcon" data-testid="search-top-btn" />
         </button>
         {screen && (
-          <div>
+          <div className="radio-button">
             <label htmlFor="ingredients-radio">
               Ingredient
               <input
@@ -112,6 +112,7 @@ function Header(props) {
               placeholder="pesquise"
               onChange={ (e) => handleSearch(e.target.value) }
             />
+
           </div>
         )}
       </header>

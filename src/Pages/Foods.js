@@ -96,19 +96,23 @@ export default function Foods() {
           </button>
         )) }
       </div>
-      { recipes
+      <div className="pictures">
+        { recipes
       && recipes.slice(0, TWELVE).map((food, index) => (
         handleRecipeCard(food, index)
       ))}
-      { recipes === ''
+
+        { recipes === ''
         && foodsMount
         && foodsMount.slice(0, TWELVE).map((food, index) => (
           handleRecipeCard(food, index)
         ))}
-      {listFoodOfCategory && listFoodOfCategory.slice(0, TWELVE).map((food, index) => (
-        handleRecipeCard(food, index)
-      )) }
-      { redirectId && <Redirect to={ `/foods/${recipes[0].idMeal}` } /> }
+
+        {listFoodOfCategory && listFoodOfCategory.slice(0, TWELVE).map((food, index) => (
+          handleRecipeCard(food, index)
+        )) }
+        { redirectId && <Redirect to={ `/foods/${recipes[0].idMeal}` } /> }
+      </div>
     </div>
   );
 }

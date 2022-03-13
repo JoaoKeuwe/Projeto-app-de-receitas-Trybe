@@ -3,3 +3,8 @@
   display: flex;
   justify-content: space-between;
 }
+
+.radio-button {
+  display:flex;
+   flex-wrap: wrap;
+}
