@@ -8,6 +8,7 @@ import {
 import Context from '../Context/context';
 import Header from '../Components/Header';
 import RecipeCard from '../Components/RecipeCard';
+import '../styles/drink&food.css';
 
 function Drinks() {
   const { recipes } = useContext(Context);
@@ -73,25 +74,29 @@ function Drinks() {
   return (
     <div>
       <Header title="Drinks" />
-      <button
-        type="button"
-        data-testid="All-category-filter"
-        value="All"
-        onClick={ () => handleButtonAll() }
-      >
-        All
-      </button>
-      { drinkCategory && drinkCategory.slice(0, FIVE).map(({ strCategory }) => (
+      <div className="box">
         <button
-          key={ strCategory }
           type="button"
-          data-testid={ `${strCategory}-category-filter` }
-          value={ strCategory }
-          onClick={ (e) => handleClickButton(e.target.value) }
+          className="same"
+          data-testid="All-category-filter"
+          value="All"
+          onClick={ () => handleButtonAll() }
         >
-          { strCategory }
+          All
         </button>
-      )) }
+        { drinkCategory && drinkCategory.slice(0, FIVE).map(({ strCategory }) => (
+          <button
+            key={ strCategory }
+            type="button"
+            className="same"
+            data-testid={ `${strCategory}-category-filter` }
+            value={ strCategory }
+            onClick={ (e) => handleClickButton(e.target.value) }
+          >
+            { strCategory }
+          </button>
+        )) }
+      </div>
       { recipes && recipes.slice(0, TWELVE).map((drink, index) => (
         handleRecipeCard(drink, index)
       ))}

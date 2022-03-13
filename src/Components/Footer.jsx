@@ -21,7 +21,9 @@ function Footer() {
   }
 
   return (
-    <div>
+    <div
+      className="footer"
+    >
       <footer
         className="footer"
         data-testid="footer"

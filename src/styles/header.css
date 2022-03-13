@@ -1,8 +1,5 @@
-.footer {
+.header {
   background-color: #e5e5e5;
-  bottom: 0;
   display: flex;
   justify-content: space-between;
-  position: fixed;
-  width: 100vw;
 }

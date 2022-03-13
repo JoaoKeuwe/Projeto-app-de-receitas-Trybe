@@ -1,0 +1,9 @@
+.box {
+  align-items: center;
+  display: block;
+  justify-content: center;
+}
+
+.same {
+  width: 33%;
+}
