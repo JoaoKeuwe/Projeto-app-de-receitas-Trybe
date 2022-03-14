@@ -4,40 +4,40 @@
 }
 
 .titleLogin {
-  font-family: Roboto;
+  font-family: sans-serif , Roboto;
   font-size: 39px;
   height: 46px;
-  margin-top: 79px;
   margin-left: 128px;
+  margin-top: 79px;
 }
 
 .inputEmail {
-  margin-top: 30px;
-  margin-left: 31px;
   border: none;
-  border-bottom: 1px solid #000000;
+  border-bottom: 1px solid black;
   font-size: 20px;
-  width: 293px;
   height: 58px;
+  margin-left: 31px;
+  margin-top: 30px;
+  width: 293px;
 }
 
 .inputPassword {
-  margin-top: 30px;
-  margin-left: 31px;
   border: none;
-  border-bottom: 1px solid #000000;
+  border-bottom: 1px solid black;
   font-size: 20px;
-  width: 293px;
   height: 58px;
+  margin-left: 31px;
+  margin-top: 30px;
+  width: 293px;
 }
 
 .btnLogin {
-  background: #6CE34F;
-  margin-top: 60px;
-  margin-left: 31px;
-  font-size: 29px;
+  background: #6ce34f;
   border: none;
-  width: 293px;
+  font-size: 29px;
   height: 58px;
+  margin-left: 31px;
+  margin-top: 60px;
+  width: 293px;
 }
 
