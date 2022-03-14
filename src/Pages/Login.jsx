@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import '../styles/login.css';
+import logo from '../images/logo.png';
 
 function Login(props) {
   const [disable, setDisable] = useState(true);
@@ -34,10 +35,14 @@ function Login(props) {
 
   return (
     <div className="login">
+
       <form className="form">
-        <h1>Login</h1>
+        {/* <h1 className="titleLogin">Login</h1> */}
+
+        <img src={ logo } alt="logo" className="picture" />
         <label htmlFor="email-input">
           <input
+            className="inputEmail"
             data-testid="email-input"
             type="text"
             placeholder="Email"
@@ -48,6 +53,7 @@ function Login(props) {
         </label>
         <label htmlFor="password-input">
           <input
+            className="inputPassword"
             data-testid="password-input"
             type="password"
             placeholder="Password"

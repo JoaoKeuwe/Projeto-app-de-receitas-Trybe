@@ -32,6 +32,7 @@ function Footer() {
           type="button"
           data-testid="drinks-bottom-btn"
           src={ drinkIcon }
+          className="footer-icons"
           onClick={ redirectToCocktails }
         >
           <img
@@ -44,6 +45,7 @@ function Footer() {
           type="button"
           data-testid="explore-bottom-btn"
           src={ exploreIcon }
+          className="footer-icons"
           onClick={ redirectToExplore }
         >
           <img
@@ -56,6 +58,7 @@ function Footer() {
           type="button"
           data-testid="food-bottom-btn"
           src={ mealIcon }
+          className="footer-icons"
           onClick={ redirectToFoods }
         >
           <img

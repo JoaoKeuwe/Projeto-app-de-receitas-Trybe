@@ -157,11 +157,12 @@ export default function Details() {
           </button>
           <p
             data-testid="recipe-category"
+            className="name-category"
           >
             {data.strCategory}
             {data.strAlcoholic}
           </p>
-          <ol>
+          <ol className="test">
             { ingredients && ingredients.map(({ ingredient, measure }, indexxx) => (
               <li
                 key={ indexxx }

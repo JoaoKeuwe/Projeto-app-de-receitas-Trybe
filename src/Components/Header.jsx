@@ -45,24 +45,28 @@ function Header(props) {
   return (
     <div>
       <header className="header">
-        <button
-          type="button"
-          data-testid="profile-top-btn"
-          src={ profileIcon }
-          onClick={ () => ClickToProfile(true) }
-        >
-          <img src={ profileIcon } alt="profile-icon" />
-        </button>
+        <div className="div">
+          <button
+            type="button"
+            data-testid="profile-top-btn"
+            className="profile"
+            src={ profileIcon }
+            onClick={ () => ClickToProfile(true) }
+          >
+            <img src={ profileIcon } alt="profile-icon" />
+          </button>
 
-        <h1 data-testid="page-title">{title}</h1>
+          <h1 data-testid="page-title">{title}</h1>
 
-        <button
-          type="button"
-          src={ searchIcon }
-          onClick={ () => setScreen(!screen) }
-        >
-          <img src={ searchIcon } alt="searchIcon" data-testid="search-top-btn" />
-        </button>
+          <button
+            type="button"
+            className="profile"
+            src={ searchIcon }
+            onClick={ () => setScreen(!screen) }
+          >
+            <img src={ searchIcon } alt="searchIcon" data-testid="search-top-btn" />
+          </button>
+        </div>
         {screen && (
           <div className="radio-button">
             <label htmlFor="ingredients-radio">

@@ -69,10 +69,8 @@ export default function Foods() {
     );
   }
   return (
-    <div>
-      <Header
-        title="Foods"
-      />
+    <div className="divMainFoods">
+      <Header title="Foods" />
       <div className="box">
         <button
           type="button"
@@ -96,18 +94,16 @@ export default function Foods() {
           </button>
         )) }
       </div>
-      <div className="pictures">
+      <div className="divFoods">
         { recipes
-      && recipes.slice(0, TWELVE).map((food, index) => (
-        handleRecipeCard(food, index)
-      ))}
-
-        { recipes === ''
-        && foodsMount
-        && foodsMount.slice(0, TWELVE).map((food, index) => (
+        && recipes.slice(0, TWELVE).map((food, index) => (
           handleRecipeCard(food, index)
         ))}
-
+        { recipes === ''
+          && foodsMount
+          && foodsMount.slice(0, TWELVE).map((food, index) => (
+            handleRecipeCard(food, index)
+          ))}
         {listFoodOfCategory && listFoodOfCategory.slice(0, TWELVE).map((food, index) => (
           handleRecipeCard(food, index)
         )) }

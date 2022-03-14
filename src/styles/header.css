@@ -1,10 +1,21 @@
 .header {
-  background-color: #e5e5e5;
-  display: flex;
-  justify-content: space-between;
+  background-color: #630606;
+  display: block;
+  color: white;
 }
 
 .radio-button {
   display:flex;
    flex-wrap: wrap;
+}
+.profile{
+  background:transparent;
+  border:none;
+}
+
+.div{
+  background-color: #630606;
+  display: flex;
+  color: white;
+  justify-content: space-between;
 }
