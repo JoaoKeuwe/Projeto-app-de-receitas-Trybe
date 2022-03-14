@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import {
   drinksApiMonunt,
   drinksApiCategory,
@@ -61,18 +61,16 @@ function Drinks() {
   });
   function handleRecipeCard(drink, index) {
     return (
-      <Link key={ drink.idDrink } to={ `/drinks/${drink.idDrink}` }>
-        <RecipeCard
-          key={ drink.idDrink }
-          index={ index }
-          recipe={ drink }
-          recipeType="drinks"
-        />
-      </Link>
+      <RecipeCard
+        key={ drink.idDrink }
+        index={ index }
+        recipe={ drink }
+        recipeType="drinks"
+      />
     );
   }
   return (
-    <div>
+    <div className="divMainFoods">
       <Header title="Drinks" />
       <div className="box">
         <button
@@ -97,18 +95,20 @@ function Drinks() {
           </button>
         )) }
       </div>
-      { recipes && recipes.slice(0, TWELVE).map((drink, index) => (
-        handleRecipeCard(drink, index)
-      ))}
-      { recipes === ''
-        && drinksMount
-        && drinksMount.slice(0, TWELVE).map((drink, index) => (
+      <div className="divFoods">
+        { recipes && recipes.slice(0, TWELVE).map((drink, index) => (
           handleRecipeCard(drink, index)
         ))}
-      { listDrinkCategory && listDrinkCategory.slice(0, TWELVE).map((drink, index) => (
-        handleRecipeCard(drink, index)
-      ))}
-      { redirectId && <Redirect to={ `/drinks/${recipes[0].idDrink}` } /> }
+        { recipes === ''
+          && drinksMount
+          && drinksMount.slice(0, TWELVE).map((drink, index) => (
+            handleRecipeCard(drink, index)
+          ))}
+        { listDrinkCategory && listDrinkCategory.slice(0, TWELVE).map((drink, index) => (
+          handleRecipeCard(drink, index)
+        ))}
+        { redirectId && <Redirect to={ `/drinks/${recipes[0].idDrink}` } /> }
+      </div>
     </div>
   );
 }

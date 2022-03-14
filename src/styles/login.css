@@ -3,20 +3,41 @@
   padding: 0;
 }
 
-.login {
-  align-items: center;
-  display: flex;
-  height: 100vh;
-  justify-content: center;
-  width: 100vw;
+.titleLogin {
+  font-family: sans-serif , Roboto;
+  font-size: 39px;
+  height: 46px;
+  margin-left: 128px;
+  margin-top: 79px;
 }
 
-.form {
-  display: inline-block;
-  text-align: center;
-  width: 60%;
+.inputEmail {
+  border: none;
+  border-bottom: 1px solid black;
+  font-size: 20px;
+  height: 58px;
+  margin-left: 31px;
+  margin-top: 30px;
+  width: 293px;
+}
+
+.inputPassword {
+  border: none;
+  border-bottom: 1px solid black;
+  font-size: 20px;
+  height: 58px;
+  margin-left: 31px;
+  margin-top: 30px;
+  width: 293px;
 }
 
 .btnLogin {
-  width: 100%;
+  background: #6ce34f;
+  border: none;
+  font-size: 29px;
+  height: 58px;
+  margin-left: 31px;
+  margin-top: 60px;
+  width: 293px;
 }
+

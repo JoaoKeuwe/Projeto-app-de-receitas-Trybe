@@ -37,7 +37,6 @@
   font-weight: 900;
 }
 
-
 @keyframes shake {
 
   0% {
@@ -66,4 +65,29 @@
   100% {
     transform: rotate(-10deg);
   }
+}
+
+.divFoods {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 18px;
+  margin-top: 7px;
+  padding-bottom: 50px;
+}
+
+.divMainFoods {
+  max-height: 100vh;
+}
+
+.linkRecipeCard {
+  color: black;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+.imgRecipeCard {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  height: 89px;
+  width: 141px;
 }
