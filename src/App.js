@@ -15,8 +15,8 @@ import Profile from './Pages/Profile';
 import FavoriteRecipes from './Pages/FavoriteRecipes';
 import DoneRecipes from './Pages/DoneRecipes';
 import FoodsDetails from './Pages/FoodsDetails';
-import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 import Foods from './Pages/Foods';
 
 function App() {
