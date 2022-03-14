@@ -1,4 +1,8 @@
 .header {
+  display: block;
+}
+
+.first {
   background-color: #e5e5e5;
   display: flex;
   justify-content: space-between;
