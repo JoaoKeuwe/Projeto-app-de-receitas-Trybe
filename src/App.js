@@ -15,6 +15,7 @@ import Profile from './Pages/Profile';
 import FavoriteRecipes from './Pages/FavoriteRecipes';
 import DoneRecipes from './Pages/DoneRecipes';
 import FoodsDetails from './Pages/FoodsDetails';
+import FoodsInProgress from './Pages/FoodsInProgress';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Foods from './Pages/Foods';
@@ -38,11 +39,11 @@ function App() {
         <Route exact path="/drinks/:id" component={ DrinksDetails } />
         <Route exact path="/explore" component={ Explore } />
         {/* <Route exact path="/drinks/{id-da-receita}" component={  } /> */}
-        {/* <Route
+        <Route
           exact
           path="/foods/{id-da-receita}/in-progress"
-          component={ RecipesInProgress }
-        /> */}
+          component={ FoodsInProgress }
+        />
         <Route
           exact
           path="/drinks/{id-da-receita}/in-progress"
