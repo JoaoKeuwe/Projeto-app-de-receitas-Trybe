@@ -68,49 +68,12 @@
   }
 }
 
-.titleLogin {
-  font-family: Roboto;
-  font-size: 39px;
-  height: 46px;
-  margin-top: 79px;
-  margin-left: 128px;
-}
-
-.inputEmail {
-  margin-top: 30px;
-  margin-left: 31px;
-  border: none;
-  border-bottom: 1px solid #000000;
-  font-size: 20px;
-  width: 293px;
-  height: 58px;
-}
-
-.inputPassword {
-  margin-top: 30px;
-  margin-left: 31px;
-  border: none;
-  border-bottom: 1px solid #000000;
-  font-size: 20px;
-  width: 293px;
-  height: 58px;
-}
-
-.btnLogin {
-  background: #6CE34F;
-  margin-top: 60px;
-  margin-left: 31px;
-  font-size: 29px;
-  border: none;
-  width: 293px;
-  height: 58px;
-}
-
 .divFoods {
   display: flex;
   flex-wrap:wrap;
   margin-left: 18px;
   margin-top: 7px;
+  padding-bottom: 50px
 }
 
 .divMainFoods {

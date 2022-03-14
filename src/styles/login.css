@@ -3,31 +3,41 @@
   padding: 0;
 }
 
-/* .login {
-  align-items: center;
-  display: flex;
-  height: 100vh;
-  justify-content: center;
-  width: 100vw;
+.titleLogin {
+  font-family: Roboto;
+  font-size: 39px;
+  height: 46px;
+  margin-top: 79px;
+  margin-left: 128px;
 }
 
-.form {
-  display: inline-block;
-  text-align: center;
-  width: 60%;
+.inputEmail {
+  margin-top: 30px;
+  margin-left: 31px;
+  border: none;
+  border-bottom: 1px solid #000000;
+  font-size: 20px;
+  width: 293px;
+  height: 58px;
+}
+
+.inputPassword {
+  margin-top: 30px;
+  margin-left: 31px;
+  border: none;
+  border-bottom: 1px solid #000000;
+  font-size: 20px;
+  width: 293px;
+  height: 58px;
 }
 
 .btnLogin {
-  width: 100%;
-} */
+  background: #6CE34F;
+  margin-top: 60px;
+  margin-left: 31px;
+  font-size: 29px;
+  border: none;
+  width: 293px;
+  height: 58px;
+}
 
-/* .titleLogin {
-  
-  Font family: Roboto;
-  Font style: Regular;
-  Font size: 39px;
-  Line height: 46px;
-  Line height: 100%;
-  Align: Left;
-  Vertical align: Bottom;
-} */
