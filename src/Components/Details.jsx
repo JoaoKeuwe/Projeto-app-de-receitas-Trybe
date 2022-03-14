@@ -1,14 +1,59 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Carousel, CarouselItem } from 'react-bootstrap';
-import Context from '../Context/context';
+import { mealID, drinkID } from '../Services/fetchID';
+import { drinksApiMonunt } from '../Services/drinksApi';
+import { foodsApiMount } from '../Services/ingredientsApi';
+import IngredientMeasure from '../Services/IngredientMeasure';
 import RecomendationCard from './RecomendationCard';
 import '../styles/startRecipe.css';
 
 export default function Details() {
-  const { fetchConditional } = useContext(Context);
+  const [meal, setMeal] = useState();
+  const [drink, setDrink] = useState();
+  const [recipe, setRecipe] = useState([]);
+  const [URLvideo, setURLvideo] = useState('');
+  const [ingredients, setIngredients] = useState();
+  const [recomendations, setRecomendations] = useState();
+  const NUM = 6;
+
+  // const [Measures, setMeasures] = useState();
+
+  async function fetchConditional() {
+    const url = window.location.href;
+    if (url.includes('foods')) {
+      const data = url.split('foods/');
+      const idNum = data[1];
+      const x = await mealID(idNum);
+      const y = await drinksApiMonunt();
+      const { drinks } = y;
+      setRecomendations(drinks);
+      const { meals } = x;
+      setRecipe(meals);
+      const arr = IngredientMeasure(meals);
+      setIngredients(arr);
+      const ID = (meals[0].strYoutube);
+      const split = ID.split('?v=');
+      const idvideo = split[1];
+      setURLvideo(idvideo);
+      setMeal(meals);
+    } if (url.includes('drinks')) {
+      const data = url.split('drinks/');
+      const idNum = data[1];
+      const x = await drinkID(idNum);
+      const { drinks } = x;
+      const y = await foodsApiMount();
+      const { meals } = y;
+      setRecomendations(meals);
+      const arr = IngredientMeasure(drinks);
+      setIngredients(arr);
+      setRecipe(drinks);
+      setDrink(drinks);
+    }
+  }
+
   useEffect(() => {
     fetchConditional();
-  });
+  }, []);
 
   return (
     <section>
@@ -30,23 +75,20 @@ export default function Details() {
             type="button"
             data-testid="share-btn"
           >
-            share
+            compartilhar
           </button>
           <button
             type="button"
             data-testid="favorite-btn"
           >
-            favorite
+            favoritar
           </button>
-          <h3>Category</h3>
           <p
             data-testid="recipe-category"
           >
             {data.strCategory}
-            {<br /> }
             {data.strAlcoholic}
           </p>
-          <h3>Ingredients and Measure</h3>
           <ol>
             { ingredients && ingredients.map(({ ingredient, measure }, indexx) => (
               <li
@@ -58,13 +100,11 @@ export default function Details() {
 
             )) }
           </ol>
-          <h3>Instructions</h3>
           <p
             data-testid="instructions"
           >
             { data.strInstructions }
           </p>
-          <h3>Recomendations</h3>
           <Carousel>
             {
               recomendations && recomendations.slice(0, NUM).map((rcard, rindex) => (
@@ -107,21 +147,20 @@ export default function Details() {
             type="button"
             data-testid="share-btn"
           >
-            share
+            compartilhar
           </button>
           <button
             type="button"
             data-testid="favorite-btn"
           >
-            favorite
+            favoritar
           </button>
-          <h3>Category</h3>
           <p
             data-testid="recipe-category"
           >
             {data.strCategory}
+            {data.strAlcoholic}
           </p>
-          <h3>Ingredients and Measure</h3>
           <ol>
             { ingredients && ingredients.map(({ ingredient, measure }, indexxx) => (
               <li
@@ -133,13 +172,11 @@ export default function Details() {
 
             )) }
           </ol>
-          <h3>Instructions</h3>
           <p
             data-testid="instructions"
           >
             { data.strInstructions }
           </p>
-          <h3>recomendations</h3>
           <Carousel>
             {
               recomendations
@@ -154,7 +191,6 @@ export default function Details() {
               ))
             }
           </Carousel>
-          <h3>Video:</h3>
           <iframe
             title="iframe"
             data-testid="video"
