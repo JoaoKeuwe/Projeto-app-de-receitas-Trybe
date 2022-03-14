@@ -75,20 +75,23 @@ export default function Details() {
             type="button"
             data-testid="share-btn"
           >
-            compartilhar
+            share
           </button>
           <button
             type="button"
             data-testid="favorite-btn"
           >
-            favoritar
+            favorite
           </button>
+          <h3>Category</h3>
           <p
             data-testid="recipe-category"
           >
             {data.strCategory}
+            {<br /> }
             {data.strAlcoholic}
           </p>
+          <h3>Ingredients and Measure</h3>
           <ol>
             { ingredients && ingredients.map(({ ingredient, measure }, indexx) => (
               <li
@@ -100,11 +103,13 @@ export default function Details() {
 
             )) }
           </ol>
+          <h3>Instructions</h3>
           <p
             data-testid="instructions"
           >
             { data.strInstructions }
           </p>
+          <h3>Recomendations</h3>
           <Carousel>
             {
               recomendations && recomendations.slice(0, NUM).map((rcard, rindex) => (
@@ -147,20 +152,21 @@ export default function Details() {
             type="button"
             data-testid="share-btn"
           >
-            compartilhar
+            share
           </button>
           <button
             type="button"
             data-testid="favorite-btn"
           >
-            favoritar
+            favorite
           </button>
+          <h3>Category</h3>
           <p
             data-testid="recipe-category"
           >
             {data.strCategory}
-            {data.strAlcoholic}
           </p>
+          <h3>Ingredients and Measure</h3>
           <ol>
             { ingredients && ingredients.map(({ ingredient, measure }, indexxx) => (
               <li
@@ -172,11 +178,13 @@ export default function Details() {
 
             )) }
           </ol>
+          <h3>Instructions</h3>
           <p
             data-testid="instructions"
           >
             { data.strInstructions }
           </p>
+          <h3>recomendations</h3>
           <Carousel>
             {
               recomendations
@@ -191,6 +199,7 @@ export default function Details() {
               ))
             }
           </Carousel>
+          <h3>Video:</h3>
           <iframe
             title="iframe"
             data-testid="video"

@@ -45,75 +45,79 @@ function Header(props) {
   return (
     <div>
       <header className="header">
-        <button
-          type="button"
-          data-testid="profile-top-btn"
-          src={ profileIcon }
-          onClick={ () => ClickToProfile(true) }
-        >
-          <img src={ profileIcon } alt="profile-icon" />
-        </button>
+        <div className="first">
+          <button
+            type="button"
+            data-testid="profile-top-btn"
+            src={ profileIcon }
+            onClick={ () => ClickToProfile(true) }
+          >
+            <img src={ profileIcon } alt="profile-icon" />
+          </button>
 
-        <h1 data-testid="page-title">{title}</h1>
+          <h1 data-testid="page-title">{title}</h1>
 
-        <button
-          type="button"
-          src={ searchIcon }
-          onClick={ () => setScreen(!screen) }
-        >
-          <img src={ searchIcon } alt="searchIcon" data-testid="search-top-btn" />
-        </button>
-        {screen && (
-          <div>
-            <label htmlFor="ingredients-radio">
-              Ingredient
+          <button
+            type="button"
+            src={ searchIcon }
+            onClick={ () => setScreen(!screen) }
+          >
+            <img src={ searchIcon } alt="searchIcon" data-testid="search-top-btn" />
+          </button>
+        </div>
+        <div className="second">
+          {screen && (
+            <div>
+              <label htmlFor="ingredients-radio">
+                Ingredient
+                <input
+                  name="radioIngredients"
+                  type="radio"
+                  data-testid="ingredient-search-radio"
+                  value="Ingredient"
+                  onClick={ hadleChange }
+                />
+              </label>
+
+              <label htmlFor="Name-radio">
+                Name
+                <input
+                  name="radioIngredients"
+                  type="radio"
+                  data-testid="name-search-radio"
+                  value="Name"
+                  onClick={ hadleChange }
+                />
+              </label>
+
+              <label htmlFor="FirstLetter-radio">
+                First Letter
+                <input
+                  name="radioIngredients"
+                  type="radio"
+                  data-testid="first-letter-search-radio"
+                  value="First letter"
+                  onClick={ hadleChange }
+                />
+              </label>
+
+              <button
+                type="button"
+                data-testid="exec-search-btn"
+                onClick={ () => handleClickApi(fetchSearch, fetchRadio, title) }
+              >
+                Search
+              </button>
+
               <input
-                name="radioIngredients"
-                type="radio"
-                data-testid="ingredient-search-radio"
-                value="Ingredient"
-                onClick={ hadleChange }
+                type="text"
+                data-testid="search-input"
+                placeholder="pesquise"
+                onChange={ (e) => handleSearch(e.target.value) }
               />
-            </label>
-
-            <label htmlFor="Name-radio">
-              Name
-              <input
-                name="radioIngredients"
-                type="radio"
-                data-testid="name-search-radio"
-                value="Name"
-                onClick={ hadleChange }
-              />
-            </label>
-
-            <label htmlFor="FirstLetter-radio">
-              First Letter
-              <input
-                name="radioIngredients"
-                type="radio"
-                data-testid="first-letter-search-radio"
-                value="First letter"
-                onClick={ hadleChange }
-              />
-            </label>
-
-            <button
-              type="button"
-              data-testid="exec-search-btn"
-              onClick={ () => handleClickApi(fetchSearch, fetchRadio, title) }
-            >
-              Search
-            </button>
-
-            <input
-              type="text"
-              data-testid="search-input"
-              placeholder="pesquise"
-              onChange={ (e) => handleSearch(e.target.value) }
-            />
-          </div>
-        )}
+            </div>
+          )}
+        </div>
       </header>
       <Footer />
       { redirect && <Redirect to="/profile" />}
