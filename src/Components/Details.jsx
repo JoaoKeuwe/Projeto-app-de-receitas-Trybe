@@ -55,9 +55,7 @@ export default function Details() {
     }
   }
 
-  useEffect(() => {
-    fetchConditional();
-  }, []);
+  useEffect(() => { fetchConditional(); }, []);
 
   function toRedirect() {
     setRedirect(true);
@@ -86,12 +84,7 @@ export default function Details() {
           >
             share
           </button>
-          <button
-            type="button"
-            data-testid="favorite-btn"
-          >
-            favorite
-          </button>
+          <button type="button" data-testid="favorite-btn"> favorite </button>
           <h3>Category</h3>
           <p
             data-testid="recipe-category"
@@ -119,11 +112,7 @@ export default function Details() {
           <Carousel>
             {recomendations && recomendations.slice(0, NUM).map((rcard, rindex) => (
               <CarouselItem key={ rindex } className="carousel">
-                <RecomendationCard
-                  key={ rindex }
-                  index={ rindex }
-                  recipe={ rcard }
-                />
+                <RecomendationCard key={ rindex } index={ rindex } recipe={ rcard } />
               </CarouselItem>
             ))}
           </Carousel>
@@ -170,9 +159,7 @@ export default function Details() {
             {data.strMeal}
           </h2>
           <button type="button" data-testid="share-btn"> share </button>
-          <button type="button" data-testid="favorite-btn">
-            favorite
-          </button>
+          <button type="button" data-testid="favorite-btn"> favorite </button>
           <h3>Category</h3>
           <p data-testid="recipe-category">
             {data.strCategory }
@@ -195,13 +182,9 @@ export default function Details() {
           <h3>recomendations</h3>
           <Carousel>
             {recomendations
-              && recomendations.slice(0, (NUM)).map((rcardd, rindexx) => (
-                <CarouselItem key={ rindexx } className="carousel">
-                  <RecomendationCard
-                    key={ rindexx }
-                    recipe={ rcardd }
-                    index={ rindexx }
-                  />
+              && recomendations.slice(0, (NUM)).map((rcardd, ind) => (
+                <CarouselItem key={ ind } className="carousel">
+                  <RecomendationCard key={ ind } recipe={ rcardd } index={ ind } />
                 </CarouselItem>
               ))}
           </Carousel>
