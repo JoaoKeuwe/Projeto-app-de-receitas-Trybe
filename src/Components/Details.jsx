@@ -1,22 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Carousel, CarouselItem } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
 import { mealID, drinkID } from '../Services/fetchID';
 import { drinksApiMonunt } from '../Services/drinksApi';
 import { foodsApiMount } from '../Services/ingredientsApi';
 import IngredientMeasure from '../Services/IngredientMeasure';
 import RecomendationCard from './RecomendationCard';
 import '../styles/startRecipe.css';
+import '../styles/doneRecipes.css';
+import '../styles/carousel.css';
+import Context from '../Context/context';
 
 export default function Details() {
   const [meal, setMeal] = useState();
   const [drink, setDrink] = useState();
   const [recipe, setRecipe] = useState([]);
   const [URLvideo, setURLvideo] = useState('');
+  const [redirect, setRedirect] = useState(false);
   const [ingredients, setIngredients] = useState();
   const [recomendations, setRecomendations] = useState();
+  const { sendDataRecipes } = useContext(Context);
   const NUM = 6;
-
-  // const [Measures, setMeasures] = useState();
 
   async function fetchConditional() {
     const url = window.location.href;
@@ -51,9 +55,12 @@ export default function Details() {
     }
   }
 
-  useEffect(() => {
-    fetchConditional();
-  }, []);
+  useEffect(() => { fetchConditional(); }, []);
+
+  function toRedirect() {
+    setRedirect(true);
+    sendDataRecipes(drink, meal);
+  }
 
   return (
     <section>
@@ -77,12 +84,8 @@ export default function Details() {
           >
             compartilhar
           </button>
-          <button
-            type="button"
-            data-testid="favorite-btn"
-          >
-            favoritar
-          </button>
+          <button type="button" data-testid="favorite-btn"> favorite </button>
+          <h3>Category</h3>
           <p
             data-testid="recipe-category"
           >
@@ -97,69 +100,66 @@ export default function Details() {
               >
                 {`${ingredient} - ${measure}`}
               </li>
-
             )) }
           </ol>
-          <p
-            data-testid="instructions"
-          >
+          <h3>Instructions</h3>
+          <p data-testid="instructions">
             { data.strInstructions }
           </p>
           <Carousel>
-            {
-              recomendations && recomendations.slice(0, NUM).map((rcard, rindex) => (
-                <CarouselItem key={ rindex }>
-                  <RecomendationCard
-                    key={ rindex }
-                    index={ rindex }
-                    recipe={ rcard }
-                  />
-                </CarouselItem>
-              ))
-            }
+            {recomendations && recomendations.slice(0, NUM).map((rcard, rindex) => (
+              <CarouselItem key={ rindex } className="carousel">
+                <RecomendationCard key={ rindex } index={ rindex } recipe={ rcard } />
+              </CarouselItem>
+            ))}
           </Carousel>
           <button
             className="start-recipe"
             type="button"
             data-testid="start-recipe-btn"
-            onClick={ () => { console.log(ingredients); } }
+            onClick={ toRedirect }
           >
             Start Recipe
           </button>
+          <button
+            className="done-recipe"
+            type="button"
+            data-testid="done-recipe-btn"
+            onClick={ () => {
+              localStorage.setItem('doneRecipes', JSON.stringify([{
+                id: data.idDrink,
+                type: 'Drink',
+                nationality: data.strArea,
+                category: data.strCategory,
+                alcoholicOrNot: data.strAlcoholic,
+                name: data.strDrink,
+                image: data.strDrinkThumb,
+                doneDate: data.dateModified,
+                tags: data.strTags,
+              }]));
+            } }
+          >
+            Done Recipe
+          </button>
+          {redirect && <Redirect to={ `/drinks/${data.idDrink}/in-progress` } /> }
         </div>
       ))}
       {meal !== undefined && recipe.map((data, index) => (
         <div key={ index }>
-
           <img
             width="100px"
             data-testid="recipe-photo"
             alt="recipe"
             src={ data.strMealThumb }
           />
-
-          <h2
-            data-testid="recipe-title"
-          >
+          <h2 data-testid="recipe-title">
             {data.strMeal}
           </h2>
-          <button
-            type="button"
-            data-testid="share-btn"
-          >
-            compartilhar
-          </button>
-          <button
-            type="button"
-            data-testid="favorite-btn"
-          >
-            favoritar
-          </button>
-          <p
-            data-testid="recipe-category"
-          >
-            {data.strCategory}
-            {data.strAlcoholic}
+          <button type="button" data-testid="share-btn"> share </button>
+          <button type="button" data-testid="favorite-btn"> favorite </button>
+          <h3>Category</h3>
+          <p data-testid="recipe-category">
+            {data.strCategory }
           </p>
           <ol>
             { ingredients && ingredients.map(({ ingredient, measure }, indexxx) => (
@@ -169,27 +169,19 @@ export default function Details() {
               >
                 {`${ingredient} - ${measure}`}
               </li>
-
             )) }
           </ol>
-          <p
-            data-testid="instructions"
-          >
+          <h3>Instructions</h3>
+          <p data-testid="instructions">
             { data.strInstructions }
           </p>
           <Carousel>
-            {
-              recomendations
-              && recomendations.slice(0, (NUM)).map((rcardd, rindexx) => (
-                <CarouselItem key={ rindexx }>
-                  <RecomendationCard
-                    key={ rindexx }
-                    recipe={ rcardd }
-                    index={ rindexx }
-                  />
+            {recomendations
+              && recomendations.slice(0, (NUM)).map((rcardd, ind) => (
+                <CarouselItem key={ ind } className="carousel">
+                  <RecomendationCard key={ ind } recipe={ rcardd } index={ ind } />
                 </CarouselItem>
-              ))
-            }
+              ))}
           </Carousel>
           <iframe
             title="iframe"
@@ -200,13 +192,33 @@ export default function Details() {
             className="start-recipe"
             type="button"
             data-testid="start-recipe-btn"
-            onClick={ () => { console.log(ingredients); } }
+            onClick={ toRedirect }
           >
             Start Recipe
           </button>
+          <button
+            className="done-recipe"
+            type="button"
+            data-testid="done-recipe-btn"
+            onClick={ () => {
+              localStorage.setItem('doneRecipes', JSON.stringify([{
+                id: data.idMeal,
+                type: 'Food',
+                nationality: data.strArea,
+                category: data.strCategory,
+                alcoholicOrNot: data.strAlcoholic,
+                name: data.strMeal,
+                image: data.strMealThumb,
+                doneDate: data.dateModified,
+                tags: data.strTags,
+              }]));
+            } }
+          >
+            Done Recipe
+          </button>
+          {redirect && <Redirect to={ `/foods/${data.idMeal}/in-progress` } /> }
         </div>
       ))}
-
     </section>
   );
 }
