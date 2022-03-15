@@ -52,7 +52,10 @@ function DrinksInProgress() {
                   key={ index }
                   data-testid={ `${index}-ingredient-step` }
                 >
-                  {`${ingredient} - ${measure}`}
+                  <label htmlFor={ index }>
+                    <input id={ index } type="checkbox" />
+                    {`${ingredient} - ${measure}`}
+                  </label>
                 </li>
               )) }
           </ol>
