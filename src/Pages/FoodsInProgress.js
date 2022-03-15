@@ -10,7 +10,7 @@ export default function FoodsInProgress() {
   const [isChecked, setIschecked] = useState(false);
   const [idd, setIdd] = useState('');
   const inProgress = localStorage.getItem('inProgressRecipes');
-
+  console.log(progress);
   async function fetchConditional() {
     const url = window.location.href;
     if (url.includes('foods')) {
@@ -29,17 +29,31 @@ export default function FoodsInProgress() {
     const { id, checked } = e.target;
     setIschecked(checked);
     setCheck(id);
-    const { idMeal } = meal[0];
     if (checked) {
-      setProgress((prev) => [...prev, id]);
-      const p = JSON.parse(inProgress).meals;
-      localStorage.setItem('inProgressRecipes',
-        JSON.stringify({ meals: p[idd] = [...id] }));
+      const p = JSON.parse(inProgress);
+      setProgress((prev) => {
+        localStorage
+          .setItem('inProgressRecipes', JSON.stringify(
+            { ...p,
+              meals: {
+                [idd]: [...prev, id] },
+            },
+          ));
+        return [...prev, id];
+      });
     } else {
-      setProgress((prev) => prev.filter((t) => t !== id));
-      const p = JSON.parse(inProgress).meals;
-      localStorage.setItem('inProgressRecipes',
-        JSON.stringify({ ...cocktails, meals: p[idd] = [...id] }));
+      setProgress((prev) => prev.filter((t) => {
+        const p = JSON.parse(inProgress);
+        const d = prev.filter((a) => a !== id);
+        localStorage
+          .setItem('inProgressRecipes', JSON.stringify(
+            { ...p,
+              meals: {
+                [idd]: [d] },
+            },
+          ));
+        return t !== id;
+      }));
     }
   }
   // const arrMeals = JSON.parse(inProgress).meals;
