@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Carousel, CarouselItem } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import { mealID, drinkID } from '../Services/fetchID';
@@ -9,7 +9,6 @@ import RecomendationCard from './RecomendationCard';
 import '../styles/startRecipe.css';
 import '../styles/doneRecipes.css';
 import '../styles/carousel.css';
-import Context from '../Context/context';
 
 export default function Details() {
   const [meal, setMeal] = useState();
@@ -19,7 +18,6 @@ export default function Details() {
   const [redirect, setRedirect] = useState(false);
   const [ingredients, setIngredients] = useState();
   const [recomendations, setRecomendations] = useState();
-  const { sendDataRecipes } = useContext(Context);
   const NUM = 6;
 
   async function fetchConditional() {
@@ -59,7 +57,6 @@ export default function Details() {
 
   function toRedirect() {
     setRedirect(true);
-    sendDataRecipes(drink, meal);
   }
 
   return (

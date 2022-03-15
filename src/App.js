@@ -41,12 +41,12 @@ function App() {
         {/* <Route exact path="/drinks/{id-da-receita}" component={  } /> */}
         <Route
           exact
-          path="/foods/{id-da-receita}/in-progress"
+          path="/foods/:id/in-progress"
           component={ FoodsInProgress }
         />
         <Route
           exact
-          path="/drinks/{id-da-receita}/in-progress"
+          path="/drinks/:id/in-progress"
           component={ DrinksInProgress }
         />
 
