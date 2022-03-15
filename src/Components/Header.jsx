@@ -74,6 +74,8 @@ function Header(props) {
               <input
                 name="radioIngredients"
                 type="radio"
+                id="ingredients-radio"
+                className="ingredient-radio-button"
                 data-testid="ingredient-search-radio"
                 value="Ingredient"
                 onClick={ hadleChange }
@@ -85,6 +87,8 @@ function Header(props) {
               <input
                 name="radioIngredients"
                 type="radio"
+                id="Name-radio"
+                className="ingredient-radio-button"
                 data-testid="name-search-radio"
                 value="Name"
                 onClick={ hadleChange }
@@ -96,6 +100,8 @@ function Header(props) {
               <input
                 name="radioIngredients"
                 type="radio"
+                id="FirstLetter-radio"
+                className="ingredient-radio-button"
                 data-testid="first-letter-search-radio"
                 value="First letter"
                 onClick={ hadleChange }
@@ -108,7 +114,7 @@ function Header(props) {
                 type="text"
                 data-testid="search-input"
                 className="input-header"
-                placeholder="pesquise"
+                placeholder="Pesquise"
                 onChange={ (e) => handleSearch(e.target.value) }
               />
 
