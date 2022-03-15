@@ -4,16 +4,16 @@
 }
 
 .test {
-font-size: 20px;
-letter-spacing:1px;
-font-weight: bold;
-}
-
-.name-category {
-  font-size:30px;
+  font-size: 20px;
   font-weight: bold;
   letter-spacing:1px;
-}
+  }
+
+  .name-category {
+    font-size:30px;
+    font-weight: bold;
+    letter-spacing:1px;
+  }
 
 img {
   width: 100%;
@@ -21,28 +21,27 @@ img {
 
 h2 {
   display:flex;
+  font-family: Fantasy;
   justify-content: center;
   letter-spacing: 1.5px;
-  font-family: Fantasy;
 }
 
 .icons-details {
+  background-color: transparent;
+  border:none;
   display:flex;
   flex-direction: row-reverse;
   margin-left:10px;
   margin-right: 3px;
-  border:none;
-  background-color: transparent;
 }
 
 .hr {
- border-top: 1px solid rgb(0, 0, 0);
- width: 80%;
- margin-left: 10%;
- 
-}
+  border-top: 1px solid rgb(0, 0, 0);
+  margin-left: 10%;
+  width: 80%;
+ }
 
-.video{
+ .video{
   margin-top: 30px;
  width:100%;
 }
