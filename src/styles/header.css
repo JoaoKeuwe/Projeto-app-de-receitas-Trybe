@@ -7,15 +7,41 @@
 .radio-button {
   display:flex;
    flex-wrap: wrap;
+  justify-content: space-around;
 }
-.profile{
+
+
+.profile {
   background:transparent;
   border:none;
 }
 
-.div{
+
+.div {
   background-color: #630606;
   display: flex;
   color: white;
+  font-style: italic;
   justify-content: space-between;
+}
+
+.button-searh {
+  margin: 10px;
+  border-radius: 6px;
+  width: 90px;
+  color: white;
+  background-color: rgba(255, 81, 0, 0.849);
+  border: 1.3px solid rgb(255, 255, 255)
+  
+}
+
+.input-header {
+  border-radius: 9px;
+  border: 2px solid rgb(0, 0, 0)
+}
+
+.input-header::placeholder {
+  margin-left: 10px;
+  font-size: 16px;
+  font-weight: bold;
 }

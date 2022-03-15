@@ -102,21 +102,26 @@ function Header(props) {
               />
             </label>
 
-            <button
-              type="button"
-              data-testid="exec-search-btn"
-              onClick={ () => handleClickApi(fetchSearch, fetchRadio, title) }
-            >
-              Search
-            </button>
+            <div>
 
-            <input
-              type="text"
-              data-testid="search-input"
-              placeholder="pesquise"
-              onChange={ (e) => handleSearch(e.target.value) }
-            />
+              <input
+                type="text"
+                data-testid="search-input"
+                className="input-header"
+                placeholder="pesquise"
+                onChange={ (e) => handleSearch(e.target.value) }
+              />
 
+              <button
+                type="button"
+                data-testid="exec-search-btn"
+                className="button-searh"
+                onClick={ () => handleClickApi(fetchSearch, fetchRadio, title) }
+              >
+                Search
+              </button>
+
+            </div>
           </div>
         )}
       </header>
