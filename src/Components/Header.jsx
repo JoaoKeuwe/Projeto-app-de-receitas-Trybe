@@ -45,10 +45,11 @@ function Header(props) {
   return (
     <div>
       <header className="header">
-        <div className="first">
+        <div className="div">
           <button
             type="button"
             data-testid="profile-top-btn"
+            className="profile"
             src={ profileIcon }
             onClick={ () => ClickToProfile(true) }
           >
@@ -59,65 +60,76 @@ function Header(props) {
 
           <button
             type="button"
+            className="profile"
             src={ searchIcon }
             onClick={ () => setScreen(!screen) }
           >
             <img src={ searchIcon } alt="searchIcon" data-testid="search-top-btn" />
           </button>
         </div>
-        <div className="second">
-          {screen && (
+        {screen && (
+          <div className="radio-button">
+            <label htmlFor="ingredients-radio">
+              Ingredient
+              <input
+                name="radioIngredients"
+                type="radio"
+                id="ingredients-radio"
+                className="ingredient-radio-button"
+                data-testid="ingredient-search-radio"
+                value="Ingredient"
+                onClick={ hadleChange }
+              />
+            </label>
+
+            <label htmlFor="Name-radio">
+              Name
+              <input
+                name="radioIngredients"
+                type="radio"
+                id="Name-radio"
+                className="ingredient-radio-button"
+                data-testid="name-search-radio"
+                value="Name"
+                onClick={ hadleChange }
+              />
+            </label>
+
+            <label htmlFor="FirstLetter-radio">
+              First Letter
+              <input
+                name="radioIngredients"
+                type="radio"
+                id="FirstLetter-radio"
+                className="ingredient-radio-button"
+                data-testid="first-letter-search-radio"
+                value="First letter"
+                onClick={ hadleChange }
+              />
+            </label>
+
             <div>
-              <label htmlFor="ingredients-radio">
-                Ingredient
-                <input
-                  name="radioIngredients"
-                  type="radio"
-                  data-testid="ingredient-search-radio"
-                  value="Ingredient"
-                  onClick={ hadleChange }
-                />
-              </label>
 
-              <label htmlFor="Name-radio">
-                Name
-                <input
-                  name="radioIngredients"
-                  type="radio"
-                  data-testid="name-search-radio"
-                  value="Name"
-                  onClick={ hadleChange }
-                />
-              </label>
-
-              <label htmlFor="FirstLetter-radio">
-                First Letter
-                <input
-                  name="radioIngredients"
-                  type="radio"
-                  data-testid="first-letter-search-radio"
-                  value="First letter"
-                  onClick={ hadleChange }
-                />
-              </label>
+              <input
+                type="text"
+                data-testid="search-input"
+                className="input-header"
+                placeholder="Pesquise"
+                onChange={ (e) => handleSearch(e.target.value) }
+              />
 
               <button
                 type="button"
                 data-testid="exec-search-btn"
+                className="button-searh"
                 onClick={ () => handleClickApi(fetchSearch, fetchRadio, title) }
               >
                 Search
               </button>
 
-              <input
-                type="text"
-                data-testid="search-input"
-                placeholder="pesquise"
-                onChange={ (e) => handleSearch(e.target.value) }
-              />
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </header>
       <Footer />
       { redirect && <Redirect to="/profile" />}

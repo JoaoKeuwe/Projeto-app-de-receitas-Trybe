@@ -6,6 +6,8 @@ import { drinksApiMonunt } from '../Services/drinksApi';
 import { foodsApiMount } from '../Services/ingredientsApi';
 import IngredientMeasure from '../Services/IngredientMeasure';
 import RecomendationCard from './RecomendationCard';
+import shareIcon from '../images/shareIcon.svg';
+import whiteHearthIcon from '../images/whiteHeartIcon.svg';
 import '../styles/startRecipe.css';
 import '../styles/doneRecipes.css';
 import '../styles/carousel.css';
@@ -64,7 +66,7 @@ export default function Details() {
       { drink !== undefined && recipe.map((data, index) => (
         <div key={ index }>
           <img
-            width="100px"
+            className="picture-recipe"
             data-testid="recipe-photo"
             alt="recipe"
             src={ data.strDrinkThumb }
@@ -72,6 +74,7 @@ export default function Details() {
 
           <h2
             data-testid="recipe-title"
+            className="name-recipe"
           >
             {data.strDrink}
           </h2>
@@ -152,13 +155,35 @@ export default function Details() {
           <h2 data-testid="recipe-title">
             {data.strMeal}
           </h2>
-          <button type="button" data-testid="share-btn"> share </button>
-          <button type="button" data-testid="favorite-btn"> favorite </button>
-          <h3>Category</h3>
-          <p data-testid="recipe-category">
-            {data.strCategory }
+          <hr className="hr" />
+          <div className="icons-details">
+            <button
+              type="button"
+              className="icons-details"
+              data-testid="share-btn"
+              src={ shareIcon }
+            >
+              <img src={ shareIcon } alt="shareIcon" />
+            </button>
+
+            <button
+              type="button"
+              className="icons-details"
+              data-testid="favorite-btn"
+              src={ whiteHearthIcon }
+            >
+              <img src={ whiteHearthIcon } alt="whiteHearthIcon" />
+            </button>
+          </div>
+          <p
+            data-testid="recipe-category"
+            className="name-category"
+
+          >
+            {data.strCategory}
+            {data.strAlcoholic}
           </p>
-          <ol>
+          <ol className="test">
             { ingredients && ingredients.map(({ ingredient, measure }, indexxx) => (
               <li
                 key={ indexxx }
@@ -181,6 +206,7 @@ export default function Details() {
               ))}
           </Carousel>
           <iframe
+            className="video"
             title="iframe"
             data-testid="video"
             src={ `https://www.youtube.com/embed/${URLvideo}` }
