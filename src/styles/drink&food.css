@@ -8,21 +8,19 @@
   border-radius: 6px;
   color: rgba(0, 0, 0, 0.63);
   font-weight: 10px bold;
-  margin: 4px;
+  margin: 1%;
   width: 47%;
 }
 
-
-
 .same:hover {
-  background-color: rgba(255, 0, 0, 0.274)
+  background-color: rgba(255, 0, 0, 0.274);
 }
 
 .pictures {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  margin: 9%; 
+  margin: 17%; 
 }
 
 a {
@@ -33,6 +31,14 @@ a {
 
 img {
   border-radius: 10px;
+}
+
+.profile {
+  width: 40px;
+}
+
+.divFoods {
+  margin-right: 10%;
 }
 
 .imgRecipeCard {
