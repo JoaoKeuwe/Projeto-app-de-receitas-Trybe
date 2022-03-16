@@ -4,13 +4,12 @@
 }
 
 .same {
-  border-radius: 6px;
   border: 5px double rgba(206, 5, 5, 0.767);
+  border-radius: 6px;
   color: rgba(0, 0, 0, 0.63);
   font-weight: bold;
-  margin-left: 30px;
   margin: 4px;
-   width: 39%;
+  width: 47%;
 }
 
 
@@ -19,7 +18,7 @@
   background-color: rgba(255, 0, 0, 0.274)
 }
 
-.pictures{
+.pictures {
   display:flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -36,7 +35,7 @@ img {
   border-radius: 10px;
 }
 
-.imgRecipeCard{
+.imgRecipeCard {
   border: 2px solid  rgba(246, 58, 1, 0.883);
   box-shadow: 4px 5px 15px rgba(218, 19, 19, 0.678);
 }
