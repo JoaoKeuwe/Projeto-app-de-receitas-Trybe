@@ -7,9 +7,10 @@
   border: 5px double rgba(206, 5, 5, 0.767);
   border-radius: 6px;
   color: rgba(0, 0, 0, 0.63);
-  /*   font-weight: 10px bold; */
-  margin: 1%;
-  width: 47%;
+  font-weight: 500;
+  margin: 4px;
+  margin-left: 30px;
+  width: 39%;
 }
 
 .same:hover {
@@ -20,7 +21,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  margin: 17%;
+  margin: 9%;
 }
 
 a {
@@ -33,15 +34,7 @@ img {
   border-radius: 10px;
 }
 
-.profile {
-  width: 40px;
-}
-
-.divFoods {
-  margin-right: 10%;
-}
-
 .imgRecipeCard {
-  border: 2px solid  rgba(246, 58, 1, 0.883);
+  border: 2px solid rgba(246, 58, 1, 0.883);
   box-shadow: 4px 5px 15px rgba(218, 19, 19, 0.678);
 }

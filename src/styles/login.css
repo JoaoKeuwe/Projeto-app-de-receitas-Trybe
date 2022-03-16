@@ -17,6 +17,7 @@
   border-bottom: 1px solid black;
   color: white;
   font-size: 20px;
+  font-weight: 500;
   height: 58px;
   margin-left: 31px;
   margin-top: 30px;
@@ -36,7 +37,6 @@ input:focus {
 
 .inputPassword {
   background: transparent;
-  border: none;
   border-bottom: 1px solid black;
   color: white;
   font-size: 20px;
@@ -48,7 +48,7 @@ input:focus {
 
 .btnLogin {
   background: #ececec;
-  border: none;
+  border: 3px solid rgb(212, 12, 12);
   border-radius: 10px;
   color: black;
   font-size: 25px;

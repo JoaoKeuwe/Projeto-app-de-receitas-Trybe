@@ -1,20 +1,19 @@
 .header {
+  background-color: #630606;
+  color: white;
   display: block;
 }
 
-.first {
-  background-color: #e5e5e5;
+.radio-button {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
 }
 
-
 .profile {
   background: transparent;
   border: none;
 }
-
 
 .div {
   background-color: #630606;
@@ -40,6 +39,7 @@
 
 .input-header::placeholder {
   font-size: 16px;
+  font-weight: 900;
   margin-left: 10px;
 }
 

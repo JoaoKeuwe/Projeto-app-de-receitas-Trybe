@@ -1,7 +1,8 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useHistory, Redirect } from 'react-router-dom';
 import Footer from '../Components/Footer';
 import profileIcon from '../images/profileIcon.svg';
+import Foods from '../Services/suprisesFoods';
 
 function ExploreFoods() {
   const history = useHistory();
@@ -14,6 +15,17 @@ function ExploreFoods() {
     history.push('/explore/foods/nationalities');
   }
 
+  const [conditional, setConditional] = useState(false);
+  const [id, setId] = useState();
+
+  async function FoodsRandom() {
+    const url = window.location.href;
+    console.log(url);
+    const randomFoods = await Foods();
+    const { meals } = randomFoods;
+    setId(meals[0].idMeal);
+    setConditional(true);
+  }
   return (
     <div>
       <header>
@@ -44,11 +56,13 @@ function ExploreFoods() {
         <button
           type="button"
           data-testid="explore-surprise"
+          onClick={ FoodsRandom }
         >
           Surprise me!
         </button>
       </div>
       <Footer />
+      {conditional && <Redirect to={ `/foods/${id}` } />}
     </div>
   );
 }
