@@ -7,7 +7,7 @@
   border: 5px double rgba(206, 5, 5, 0.767);
   border-radius: 6px;
   color: rgba(0, 0, 0, 0.63);
-  font-weight: bold;
+  font-weight: 10px bold;
   margin: 4px;
   width: 47%;
 }
@@ -19,14 +19,14 @@
 }
 
 .pictures {
-  display:flex;
+  display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   margin: 9%; 
 }
 
 a {
-  display:flex;
+  display: flex;
   font-size: 20px;
   text-align: center;
 }
