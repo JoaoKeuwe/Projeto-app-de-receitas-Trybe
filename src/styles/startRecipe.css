@@ -5,7 +5,6 @@
 
 .test {
   font-size: 20px;
-  font-weight: 10px bold;
   letter-spacing: 1px;
   list-style-type: none;
   margin-left: 5%;
@@ -13,7 +12,6 @@
 
 .name-category {
   font-size: 30px;
-  font-weight: 10px bold;
   letter-spacing: 1px;
 }
 
@@ -32,7 +30,6 @@ p {
   display: flex;
   font-size: 20px;
   margin-left: 5%;
-  font-weight: 10px bold;
   width: 90%;
   letter-spacing: 1px;
 }

@@ -7,7 +7,7 @@
   border: 5px double rgba(206, 5, 5, 0.767);
   border-radius: 6px;
   color: rgba(0, 0, 0, 0.63);
-  font-weight: 10px bold;
+  /*   font-weight: 10px bold; */
   margin: 1%;
   width: 47%;
 }
