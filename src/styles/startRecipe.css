@@ -7,8 +7,8 @@
   font-size: 20px;
   font-weight: 10px bold;
   letter-spacing: 1px;
-  margin-left: 5%;
   list-style-type: none;
+  margin-left: 5%;
 }
 
 .name-category {
@@ -32,8 +32,8 @@ p {
   display: flex;
   font-size: 20px;
   margin-left: 5%;
-  width: 90%;
   font-weight: 10px bold;
+  width: 90%;
   letter-spacing: 1px;
 }
 
@@ -45,8 +45,6 @@ p {
   margin-left: 10px;
   margin-right: 3px;
 }
-
-
 
 .hr {
   border-top: 1px solid black;

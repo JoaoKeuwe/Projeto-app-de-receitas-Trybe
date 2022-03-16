@@ -4,7 +4,7 @@
 }
 
 .titleLogin {
-  font-family: sans-serif, Roboto;
+  font-family: sans-serif , Roboto;
   font-size: 39px;
   height: 46px;
   margin-left: 128px;
@@ -33,10 +33,6 @@ input:focus {
   margin-left: 80px;
   margin-top: 10px;
   width: 200px;
-}
-
-.titleLogin {
-  margin-top: 180px;
 }
 
 .inputPassword {
