@@ -1,47 +1,48 @@
 .start-recipe {
-  position: fixed;
   bottom: 0;
+  left: 0;
+  position: fixed;
 }
 
 .test {
   font-size: 20px;
-  font-weight: bold;
-  letter-spacing:1px;
-  }
+  font-weight: 500;
+  letter-spacing: 1px;
+}
 
-  .name-category {
-    font-size:30px;
-    font-weight: bold;
-    letter-spacing:1px;
-  }
+.name-category {
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
 
 img {
   width: 100%;
 }
 
 h2 {
-  display:flex;
-  font-family: Fantasy;
+  display: flex;
+  font-family: fantasy;
   justify-content: center;
   letter-spacing: 1.5px;
 }
 
 .icons-details {
   background-color: transparent;
-  border:none;
-  display:flex;
+  border: none;
+  display: flex;
   flex-direction: row-reverse;
-  margin-left:10px;
+  margin-left: 10px;
   margin-right: 3px;
 }
 
 .hr {
-  border-top: 1px solid rgb(0, 0, 0);
+  border-top: 1px solid black;
   margin-left: 10%;
   width: 80%;
- }
+}
 
- .video{
+.video {
   margin-top: 30px;
- width:100%;
+  width: 100%;
 }

@@ -11,68 +11,56 @@
   margin-top: 79px;
 }
 
-
 .inputEmail {
-  background:transparent;
-  border-bottom: 1px solid black;
+  background: transparent;
   border: none;
-  color:white;
+  border-bottom: 1px solid black;
+  color: white;
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 500;
   height: 58px;
   margin-left: 31px;
   margin-top: 30px;
   width: 293px;
 }
 
-
 input:focus {
   box-shadow: 0 0 0 0;
   outline: 0;
 }
 
-.picture{
-  width:200px;
- margin-top: 10px;
- margin-left: 80px;
+.picture {
+  margin-left: 80px;
+  margin-top: 10px;
+  width: 200px;
 }
 
-.titleLogin{
-  margin-top:180px;
-  }
+.inputPassword {
+  background: transparent;
+  border-bottom: 1px solid black;
+  color: white;
+  font-size: 20px;
+  height: 58px;
+  margin-left: 31px;
+  margin-top: 30px;
+  width: 293px;
+}
 
+.btnLogin {
+  background: #ececec;
+  border: 3px solid rgb(212, 12, 12);
+  border-radius: 10px;
+  color: black;
+  font-size: 25px;
+  margin-left: 80px;
+  margin-top: 60px;
+  width: 200px;
+}
 
-  .inputPassword {
-    background:transparent;
-    border-bottom: 1px solid black;
-    border: none;
-    color:white;
-    font-size: 20px;
-    height: 58px;
-    margin-left: 31px;
-    margin-top: 30px;
-    width: 293px;
-  }
-
-  .btnLogin {
-    background: #ececec;
-    border-radius: 10px;
-    border: none;
-    border:3px solid rgb(212, 12, 12);
-    color:rgb(0, 0, 0);
-    font-size: 25px;
-    margin-left: 80px;
-    margin-top: 60px;
-    width: 200px;
-  }
-
-
-  .login {
-    background-color: #890F0D;
-    color:white;
-    min-height: 100vh;
-    position: absolute;
-    z-index: -1;
-  }
-
-
+.login {
+  background-color: #890f0d;
+  color: white;
+  min-height: 100vh;
+  position: absolute;
+  z-index: -1;
+}

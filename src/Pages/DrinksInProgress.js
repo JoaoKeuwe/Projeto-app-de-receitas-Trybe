@@ -5,21 +5,57 @@ import IngredientMeasure from '../Services/IngredientMeasure';
 function DrinksInProgress() {
   const [drink, setDrink] = useState();
   const [ingredients, setIngredients] = useState();
+  const [idd, setIdd] = useState('');
+  const [localCocktails, setLocalCocktails] = useState([]);
+  const [update, setUpdate] = useState(0);
+  const inProgress = localStorage.getItem('inProgressRecipes');
 
   async function fetchConditional() {
     const url = window.location.href;
     if (url.includes('drinks')) {
       const data = url.split('http://localhost:3000/drinks/');
       const idNum = data[1].split('/in-progress');
-      const x = await drinkID(idNum[0]);
-      const { drinks } = x;
+      const drinks = await drinkID(idNum[0]);
+      // const { drinks } = x;
       const arr = IngredientMeasure(drinks);
       setIngredients(arr);
       setDrink(drinks);
+      setIdd(drinks[0].idDrink);
+    }
+  }
+  function handleClick({ target }) {
+    setUpdate(update + 1);
+    let local = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (!local) local = { cocktails: {}, meals: {} };
+    let arrayCocktails = local.cocktails[idd];
+    if (!arrayCocktails) arrayCocktails = [];
+    const check = arrayCocktails.some((e) => e === target.id);
+    if (!check) {
+      const newArray = [...arrayCocktails, target.id];
+      local.cocktails[idd] = newArray;
+      localStorage.setItem('inProgressRecipes', JSON.stringify(local));
+    }
+    if (check) {
+      const newArrayCocktails = arrayCocktails.filter((as) => as !== target.id);
+      local.cocktails[idd] = newArrayCocktails;
+      localStorage.setItem('inProgressRecipes', JSON.stringify(local));
     }
   }
 
-  useEffect(() => { fetchConditional(); }, []);
+  useEffect(() => {
+    fetchConditional();
+    if (inProgress === null) {
+      localStorage.setItem('inProgressRecipes',
+        JSON.stringify({ cocktails: {}, meals: {} }));
+    }
+    if (inProgress) setLocalCocktails(Object.values(JSON.parse(inProgress).cocktails));
+  }, [inProgress]);
+
+  useEffect(() => {
+    if (inProgress && update) {
+      setLocalCocktails(Object.values(JSON.parse(inProgress).cocktails));
+    }
+  }, [inProgress, update]);
 
   return (
     <div>
@@ -53,7 +89,13 @@ function DrinksInProgress() {
                   data-testid={ `${index}-ingredient-step` }
                 >
                   <label htmlFor={ index }>
-                    <input id={ index } type="checkbox" />
+                    <input
+                      id={ index }
+                      type="checkbox"
+                      onChange={ handleClick }
+                      checked={ localCocktails.length > 0
+                        && localCocktails[0].some((as) => Number(as) === index) }
+                    />
                     {`${ingredient} - ${measure}`}
                   </label>
                 </li>
