@@ -27,6 +27,14 @@ h2 {
   letter-spacing: 1.5px;
 }
 
+p {
+  display: flex;
+  font-size: 20px;
+  letter-spacing: 1px;
+  margin-left: 5%;
+  width: 90%;
+}
+
 .icons-details {
   background-color: transparent;
   border: none;
