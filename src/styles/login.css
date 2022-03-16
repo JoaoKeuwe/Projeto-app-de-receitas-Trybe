@@ -12,18 +12,33 @@
 }
 
 .inputEmail {
+  background: transparent;
   border: none;
   border-bottom: 1px solid black;
+  color: white;
   font-size: 20px;
+  font-weight: 500;
   height: 58px;
   margin-left: 31px;
   margin-top: 30px;
   width: 293px;
 }
 
+input:focus {
+  box-shadow: 0 0 0 0;
+  outline: 0;
+}
+
+.picture {
+  margin-left: 80px;
+  margin-top: 10px;
+  width: 200px;
+}
+
 .inputPassword {
-  border: none;
+  background: transparent;
   border-bottom: 1px solid black;
+  color: white;
   font-size: 20px;
   height: 58px;
   margin-left: 31px;
@@ -32,12 +47,20 @@
 }
 
 .btnLogin {
-  background: #6ce34f;
-  border: none;
-  font-size: 29px;
-  height: 58px;
-  margin-left: 31px;
+  background: #ececec;
+  border: 3px solid rgb(212, 12, 12);
+  border-radius: 10px;
+  color: black;
+  font-size: 25px;
+  margin-left: 80px;
   margin-top: 60px;
-  width: 293px;
+  width: 200px;
 }
 
+.login {
+  background-color: #890f0d;
+  color: white;
+  min-height: 100vh;
+  position: absolute;
+  z-index: -1;
+}

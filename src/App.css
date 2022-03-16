@@ -91,3 +91,7 @@
   height: 89px;
   width: 141px;
 }
+
+.check {
+  text-decoration: line-through;
+}

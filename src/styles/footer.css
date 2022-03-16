@@ -1,8 +1,16 @@
 .footer {
-  background-color: #e5e5e5;
+  background-color: #630606c0;
+  border-top: transparent;
   bottom: 0;
   display: flex;
   justify-content: space-between;
   position: fixed;
   width: 100vw;
+  z-index: +1;
 }
+
+.footer-icons {
+  background: transparent;
+  border: none;
+}
+

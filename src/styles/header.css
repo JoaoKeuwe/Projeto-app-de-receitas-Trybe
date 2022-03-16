@@ -1,9 +1,48 @@
 .header {
+  background-color: #630606;
+  color: white;
   display: block;
 }
 
-.first {
-  background-color: #e5e5e5;
+.radio-button {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.profile {
+  background: transparent;
+  border: none;
+}
+
+.div {
+  background-color: #630606;
+  color: white;
+  display: flex;
+  font-style: italic;
   justify-content: space-between;
+}
+
+.button-searh {
+  background-color: rgba(255, 81, 0, 0.849);
+  border: 1.3px solid white;
+  border-radius: 6px;
+  color: white;
+  margin: 10px;
+  width: 90px;
+}
+
+.input-header {
+  border: 2.9px solid black;
+  border-radius: 9px;
+}
+
+.input-header::placeholder {
+  font-size: 16px;
+  font-weight: 900;
+  margin-left: 10px;
+}
+
+.ingredient-radio-button {
+  margin: 8px;
 }
