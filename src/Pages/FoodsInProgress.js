@@ -5,12 +5,11 @@ import IngredientMeasure from '../Services/IngredientMeasure';
 export default function FoodsInProgress() {
   const [meal, setMeal] = useState();
   const [ingredients, setIngredients] = useState();
-  const [progress, setProgress] = useState([]);
-  const [check, setCheck] = useState('');
-  const [isChecked, setIschecked] = useState(false);
   const [idd, setIdd] = useState('');
+  const [localSto, setLocalSto] = useState([]);
   const inProgress = localStorage.getItem('inProgressRecipes');
-  console.log(progress);
+  const [update, setUpdate] = useState(0);
+
   async function fetchConditional() {
     const url = window.location.href;
     if (url.includes('foods')) {
@@ -25,40 +24,24 @@ export default function FoodsInProgress() {
     }
   }
 
-  function handleClick(e) {
-    const { id, checked } = e.target;
-    setIschecked(checked);
-    setCheck(id);
-    if (checked) {
-      const p = JSON.parse(inProgress);
-      setProgress((prev) => {
-        localStorage
-          .setItem('inProgressRecipes', JSON.stringify(
-            { ...p,
-              meals: {
-                [idd]: [...prev, id] },
-            },
-          ));
-        return [...prev, id];
-      });
-    } else {
-      setProgress((prev) => prev.filter((t) => {
-        const p = JSON.parse(inProgress);
-        const d = prev.filter((a) => a !== id);
-        localStorage
-          .setItem('inProgressRecipes', JSON.stringify(
-            { ...p,
-              meals: {
-                [idd]: [d] },
-            },
-          ));
-        return t !== id;
-      }));
+  function handleClick({ target }) {
+    setUpdate(update + 1);
+    let local = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (!local) local = { cocktails: {}, meals: {} };
+    let arrayMeals = local.meals[idd];
+    if (!arrayMeals) arrayMeals = [];
+    const check = arrayMeals.some((e) => e === target.id);
+    if (!check) {
+      const newArrayMeals = [...arrayMeals, target.id];
+      local.meals[idd] = newArrayMeals;
+      localStorage.setItem('inProgressRecipes', JSON.stringify(local));
+    }
+    if (check) {
+      const filterArrayMeals = arrayMeals.filter((as) => as !== target.id);
+      local.meals[idd] = filterArrayMeals;
+      localStorage.setItem('inProgressRecipes', JSON.stringify(local));
     }
   }
-  // const arrMeals = JSON.parse(inProgress).meals;
-  // localStorage.setItem('inProgressRecipes',
-  //   JSON.stringify({ cocktails: {}, meals: arrMeals[idd] = progress }));
 
   useEffect(() => {
     fetchConditional();
@@ -66,7 +49,13 @@ export default function FoodsInProgress() {
       localStorage.setItem('inProgressRecipes',
         JSON.stringify({ cocktails: {}, meals: {} }));
     }
+    if (inProgress) setLocalSto(Object.values(JSON.parse(inProgress).meals));
   }, [inProgress]);
+
+  useEffect(() => {
+    if (inProgress && update) setLocalSto(Object.values(JSON.parse(inProgress).meals));
+  }, [inProgress, update]);
+
   return (
     <div>
       { meal && meal.map((data) => (
@@ -95,13 +84,14 @@ export default function FoodsInProgress() {
                   key={ index }
                   data-testid={ `${index}-ingredient-step` }
                 >
-                  <label className={ check } htmlFor={ index }>
+                  <label htmlFor={ index }>
                     <input
                       id={ index }
                       type="checkbox"
                       value={ `${ingredient} - ${measure}` }
-                      onClick={ (e) => handleClick(e) }
-                      defaultChecked={ isChecked }
+                      onChange={ handleClick }
+                      checked={ localSto.length > 0
+                        && localSto[0].some((as) => Number(as) === index) }
                     />
                     {`${ingredient} - ${measure}`}
                   </label>
