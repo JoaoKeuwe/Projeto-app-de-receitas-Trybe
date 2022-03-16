@@ -5,15 +5,15 @@
 }
 
 .radio-button {
-  display:flex;
-   flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
 }
 
 
 .profile {
-  background:transparent;
-  border:none;
+  background: transparent;
+  border: none;
 }
 
 
@@ -27,21 +27,21 @@
 
 .button-searh {
   background-color: rgba(255, 81, 0, 0.849);
+  border: 1.3px solid white;
   border-radius: 6px;
-  border: 1.3px solid rgb(255, 255, 255);
   color: white;
   margin: 10px;
   width: 90px;
 }
 
 .input-header {
+  border: 2.9px solid black;
   border-radius: 9px;
-  border: 2.9px solid rgb(0, 0, 0)
 }
 
 .input-header::placeholder {
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 10px bold;
   margin-left: 10px;
 }
 
