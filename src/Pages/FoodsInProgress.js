@@ -18,6 +18,7 @@ export default function FoodsInProgress() {
   const inProgress = localStorage.getItem('inProgressRecipes');
   const inFavorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   function verificationFavorite() {
     const local = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (local) {
@@ -106,7 +107,7 @@ export default function FoodsInProgress() {
       setLocalSto(Object.values(JSON.parse(inProgress).meals));
       setMealsMaisId(JSON.parse(inProgress).meals[idd]);
     }
-  }, [inProgress]);
+  }, [inProgress, idd]);
 
   useEffect(() => {
     if (inProgress && update) {
@@ -117,7 +118,7 @@ export default function FoodsInProgress() {
 
   useEffect(() => {
     verificationFavorite();
-  }, [idd]);
+  }, [idd, verificationFavorite]);
   useEffect(() => {
     if (inFavorite === null) {
       localStorage.setItem('favoriteRecipes', JSON.stringify([]));
@@ -131,7 +132,7 @@ export default function FoodsInProgress() {
     if (ingredients && mealsMaisId && mealsMaisId.length !== ingredients.length) {
       setIsDisabled(true);
     }
-  }, [mealsMaisId]);
+  }, [mealsMaisId, ingredients]);
 
   return (
     <div>

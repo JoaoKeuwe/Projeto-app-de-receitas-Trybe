@@ -18,6 +18,7 @@ function DrinksInProgress() {
   const inProgress = localStorage.getItem('inProgressRecipes');
   const inFavorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   function verificationFavorite() {
     const local = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (local) {
@@ -116,7 +117,7 @@ function DrinksInProgress() {
   }, [inProgress, update, idd]);
   useEffect(() => {
     verificationFavorite();
-  }, [idd]);
+  }, [idd, verificationFavorite]);
 
   useEffect(() => {
     if (inFavorite === null) {
@@ -127,14 +128,11 @@ function DrinksInProgress() {
   useEffect(() => {
     if (cocktailsMaisId && cocktailsMaisId.length) {
       setIsDisabled(false);
-      console.log('botão ativado', ingredients.length);
     }
     if (cocktailsMaisId && cocktailsMaisId.length !== ingredients.length) {
-      console.log('botão desativado', isDisabled);
       setIsDisabled(true);
-      console.log('botão desativado', isDisabled);
     }
-  }, [cocktailsMaisId]);
+  }, [cocktailsMaisId, ingredients]);
 
   return (
     <div>
