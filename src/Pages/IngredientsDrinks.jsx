@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Link, Redirect, useLocation } from 'react-router-dom';
-
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import Footer from '../Components/Footer';
 import profileIcon from '../images/profileIcon.svg';
 import IngredientDrinksAPI from '../Services/ingredientsDrinks';
 import '../styles/ingredientsDrinks.css';
+import context from '../Context/context';
 
 function IngredientsDrinks() {
   const [ingredientes, setIngredientes] = useState();
+  const { setFilterIngredients } = useContext(context);
   /* const [redirect, setRedirect] = useState(); */
   const ZERO = 0;
   const TWELVE = 12;
@@ -16,15 +17,16 @@ function IngredientsDrinks() {
   useEffect(() => {
     async function ingredientDrink() {
       const { drinks } = await IngredientDrinksAPI();
-      console.log(drinks);
       setIngredientes(drinks.slice(ZERO, TWELVE));
     }
     ingredientDrink();
   }, []);
 
-  function filterDrinks(ingredient) {
-    console.log(ingredient);
+  async function filterDrinks(ingredient) {
     const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient.strIngredient1}`;
+    const response = await fetch(url);
+    const { drinks } = await response.json();
+    setFilterIngredients(drinks.slice(ZERO, TWELVE));
   }
 
   return (
