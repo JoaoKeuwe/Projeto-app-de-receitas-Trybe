@@ -1,13 +1,26 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useHistory, Redirect } from 'react-router-dom';
 import Footer from '../Components/Footer';
 import profileIcon from '../images/profileIcon.svg';
+import Drinks from '../Services/suprisesDrink';
 
 function ExploreDrinks() {
   const history = useHistory();
 
   function screenDrinksMeal() {
     history.push('/explore/drinks/ingredients');
+  }
+
+  const [conditional, setConditional] = useState(false);
+  const [id, setId] = useState();
+
+  async function DrinksRandom() {
+    const url = window.location.href;
+    console.log(url);
+    const randomDrinks = await Drinks();
+    const { drinks } = randomDrinks;
+    setId(drinks[0].idDrink);
+    setConditional(true);
   }
   return (
 
@@ -32,6 +45,7 @@ function ExploreDrinks() {
           <button
             type="button"
             data-testid="explore-surprise"
+            onClick={ DrinksRandom }
           >
             Surprise me!
           </button>
@@ -39,6 +53,7 @@ function ExploreDrinks() {
         ;
       </div>
       <Footer />
+      {conditional && <Redirect to={ `/drinks/${id}` } />}
     </div>
   );
 }
