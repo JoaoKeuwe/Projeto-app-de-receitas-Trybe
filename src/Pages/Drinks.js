@@ -99,6 +99,7 @@ function Drinks() {
         { recipes && recipes.slice(0, TWELVE).map((drink, index) => (
           handleRecipeCard(drink, index)
         ))}
+        {console.log(drinksMount)}
         { recipes === ''
           && drinksMount
           && drinksMount.slice(0, TWELVE).map((drink, index) => (
