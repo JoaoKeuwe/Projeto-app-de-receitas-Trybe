@@ -1,21 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import Footer from '../Components/Footer';
 import profileIcon from '../images/profileIcon.svg';
 import Ingredients from '../Services/ingredientsFoods';
+import context from '../Context/context';
+import '../styles/ingredientsDrinks.css';
 
 function IngredientsFoods() {
   const [ingredientes, setIngredientes] = useState();
   const ZERO = 0;
   const TWELVE = 12;
+  const { pathname } = useLocation();
+  const { setFilterIngredients } = useContext(context);
+  console.log(pathname);
   /* componentDidMount */
   useEffect(() => {
     async function ingredient() {
       const { meals } = await Ingredients();
-      console.log(meals);
       setIngredientes(meals.slice(ZERO, TWELVE));
     }
     ingredient();
   }, []);
+
+  async function filterFoods(ingredient) {
+    const url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient.strIngredient}`;
+    const response = await fetch(url);
+    const { meals } = await response.json();
+    setFilterIngredients(meals.slice(ZERO, TWELVE));
+  }
   return (
     <div>
       <header>
@@ -28,10 +40,14 @@ function IngredientsFoods() {
         </button>
 
         <h2 data-testid="page-title">Explore Ingredients</h2>
-
         {ingredientes
           && ingredientes.map((ingredient, index) => (
-            <section key={ index } data-testid={ `${index}-ingredient-card` }>
+            <Link
+              onClick={ () => filterFoods(ingredient) }
+              to={ `/${pathname.split('/')[2]}` }
+              key={ index }
+              data-testid={ `${index}-ingredient-card` }
+            >
               <img
                 src={ `https://www.themealdb.com/images/ingredients/${ingredient.strIngredient}-Small.png` }
                 alt="#"
@@ -40,7 +56,7 @@ function IngredientsFoods() {
               <p data-testid={ `${index}-card-name` }>
                 {ingredient.strIngredient}
               </p>
-            </section>
+            </Link>
           ))}
       </header>
       <Footer />

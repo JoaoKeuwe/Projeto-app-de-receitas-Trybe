@@ -12,7 +12,6 @@ import '../styles/drink&food.css';
 
 function Drinks() {
   const { recipes, filterIngredients } = useContext(Context);
-
   const [drinksMount, setDrinksMount] = useState();
   const [redirectId, setRedirectId] = useState(false);
   const [drinkCategory, setDrinkCategory] = useState('');
@@ -103,7 +102,6 @@ function Drinks() {
         { recipes && recipes.slice(0, TWELVE).map((drink, index) => (
           handleRecipeCard(drink, index)
         ))}
-        {console.log(drinksMount)}
         { recipes === ''
           && drinksMount
           && drinksMount.slice(0, TWELVE).map((drink, index) => (
