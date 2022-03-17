@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { drinkID } from '../Services/fetchID';
 import IngredientMeasure from '../Services/IngredientMeasure';
 import whiteHearthIcon from '../images/whiteHeartIcon.svg';
@@ -6,13 +7,14 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function DrinksInProgress() {
   const [drink, setDrink] = useState();
-  const [ingredients, setIngredients] = useState();
+  const [ingredients, setIngredients] = useState([]);
   const [idd, setIdd] = useState('');
   const [localCocktails, setLocalCocktails] = useState([]);
   const [update, setUpdate] = useState(0);
   const [copied, setCopied] = useState();
   const [favorite, setFavorite] = useState();
   const [isDisabled, setIsDisabled] = useState(true);
+  const [cocktailsMaisId, setCocktailsMaisId] = useState([]);
   const inProgress = localStorage.getItem('inProgressRecipes');
   const inFavorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
@@ -31,7 +33,9 @@ function DrinksInProgress() {
       const idNum = data[1].split('/in-progress');
       const drinks = await drinkID(idNum[0]);
       const arr = IngredientMeasure(drinks);
-      setIngredients(arr);
+      const newArr = arr
+        .filter(({ ingredient, measure }) => ingredient !== '' && measure !== '');
+      setIngredients(newArr);
       setDrink(drinks);
       setIdd(drinks[0].idDrink);
     }
@@ -53,15 +57,17 @@ function DrinksInProgress() {
       local.cocktails[idd] = newArrayCocktails;
       localStorage.setItem('inProgressRecipes', JSON.stringify(local));
     }
-    if (ingredients.length === localCocktails.length) {
-      setIsDisabled(false);
-    }
   }
   function clipURL() {
     const url = window.location.href;
     const newUrl = url.split('/in-progress');
     navigator.clipboard.writeText(newUrl[0]);
     setCopied(true);
+  }
+
+  const history = useHistory();
+  function handleOnRecipe() {
+    return history.push('/done-recipes');
   }
 
   const handleFavorite = () => {
@@ -96,14 +102,18 @@ function DrinksInProgress() {
       localStorage.setItem('inProgressRecipes',
         JSON.stringify({ cocktails: {}, meals: {} }));
     }
-    if (inProgress) setLocalCocktails(Object.values(JSON.parse(inProgress).cocktails));
-  }, [inProgress]);
+    if (inProgress) {
+      setLocalCocktails(Object.values(JSON.parse(inProgress).cocktails));
+      setCocktailsMaisId(JSON.parse(inProgress).cocktails[idd]);
+    }
+  }, [inProgress, idd]);
 
   useEffect(() => {
     if (inProgress && update) {
       setLocalCocktails(Object.values(JSON.parse(inProgress).cocktails));
+      setCocktailsMaisId(JSON.parse(inProgress).cocktails[idd]);
     }
-  }, [inProgress, update]);
+  }, [inProgress, update, idd]);
   useEffect(() => {
     verificationFavorite();
   }, [idd]);
@@ -113,6 +123,18 @@ function DrinksInProgress() {
       localStorage.setItem('favoriteRecipes', JSON.stringify([]));
     }
   }, [inFavorite]);
+
+  useEffect(() => {
+    if (cocktailsMaisId && cocktailsMaisId.length) {
+      setIsDisabled(false);
+      console.log('botão ativado', ingredients.length);
+    }
+    if (cocktailsMaisId && cocktailsMaisId.length !== ingredients.length) {
+      console.log('botão desativado', isDisabled);
+      setIsDisabled(true);
+      console.log('botão desativado', isDisabled);
+    }
+  }, [cocktailsMaisId]);
 
   return (
     <div>
@@ -153,7 +175,6 @@ function DrinksInProgress() {
           <ol>
             { ingredients
             && ingredients
-              .filter(({ ingredient, measure }) => ingredient !== '' && measure !== '')
               .map(({ ingredient, measure }, index) => (
                 <li
                   key={ index }
@@ -180,6 +201,7 @@ function DrinksInProgress() {
             type="button"
             data-testid="finish-recipe-btn"
             disabled={ isDisabled }
+            onClick={ () => handleOnRecipe() }
           >
             Finish Recipe
           </button>

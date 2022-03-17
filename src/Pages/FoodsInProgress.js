@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { mealID } from '../Services/fetchID';
 import IngredientMeasure from '../Services/IngredientMeasure';
 import whiteHearthIcon from '../images/whiteHeartIcon.svg';
@@ -12,6 +13,8 @@ export default function FoodsInProgress() {
   const [update, setUpdate] = useState(0);
   const [copied, setCopied] = useState();
   const [favorite, setFavorite] = useState();
+  const [mealsMaisId, setMealsMaisId] = useState([]);
+  const [isDisabled, setIsDisabled] = useState(true);
   const inProgress = localStorage.getItem('inProgressRecipes');
   const inFavorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
@@ -22,6 +25,10 @@ export default function FoodsInProgress() {
       setFavorite(check);
     }
   }
+  const history = useHistory();
+  function handleOnRecipe() {
+    return history.push('/done-recipes');
+  }
 
   async function fetchConditional() {
     const url = window.location.href;
@@ -30,7 +37,9 @@ export default function FoodsInProgress() {
       const idNum = data[1].split('/in-progress');
       const meals = await mealID(idNum[0]);
       const arrIngredientMeasure = IngredientMeasure(meals);
-      setIngredients(arrIngredientMeasure);
+      const newArr = arrIngredientMeasure
+        .filter(({ ingredient, measure }) => ingredient !== '' && measure !== '');
+      setIngredients(newArr);
       setMeal(meals);
       setIdd(meals[0].idMeal);
     }
@@ -93,12 +102,18 @@ export default function FoodsInProgress() {
       localStorage.setItem('inProgressRecipes',
         JSON.stringify({ cocktails: {}, meals: {} }));
     }
-    if (inProgress) setLocalSto(Object.values(JSON.parse(inProgress).meals));
+    if (inProgress) {
+      setLocalSto(Object.values(JSON.parse(inProgress).meals));
+      setMealsMaisId(JSON.parse(inProgress).meals[idd]);
+    }
   }, [inProgress]);
 
   useEffect(() => {
-    if (inProgress && update) setLocalSto(Object.values(JSON.parse(inProgress).meals));
-  }, [inProgress, update]);
+    if (inProgress && update) {
+      setLocalSto(Object.values(JSON.parse(inProgress).meals));
+      setMealsMaisId(JSON.parse(inProgress).meals[idd]);
+    }
+  }, [inProgress, update, idd]);
 
   useEffect(() => {
     verificationFavorite();
@@ -108,6 +123,16 @@ export default function FoodsInProgress() {
       localStorage.setItem('favoriteRecipes', JSON.stringify([]));
     }
   }, [inFavorite]);
+
+  useEffect(() => {
+    if (mealsMaisId && mealsMaisId.length) {
+      setIsDisabled(false);
+    }
+    if (ingredients && mealsMaisId && mealsMaisId.length !== ingredients.length) {
+      setIsDisabled(true);
+    }
+  }, [mealsMaisId]);
+
   return (
     <div>
       { meal && meal.map((data) => (
@@ -144,7 +169,6 @@ export default function FoodsInProgress() {
           <ol>
             { ingredients
             && ingredients
-              .filter(({ ingredient, measure }) => ingredient !== '' && measure !== '')
               .map(({ ingredient, measure }, index) => (
                 <li
                   key={ index }
@@ -171,6 +195,8 @@ export default function FoodsInProgress() {
           <button
             type="button"
             data-testid="finish-recipe-btn"
+            disabled={ isDisabled }
+            onClick={ () => handleOnRecipe() }
           >
             Finish Recipe
           </button>
