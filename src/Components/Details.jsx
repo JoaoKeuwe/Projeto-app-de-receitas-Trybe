@@ -9,6 +9,7 @@ import RecomendationCard from './RecomendationCard';
 import SavFavRecipes from '../Services/SavFavRecipes';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHearthIcon from '../images/whiteHeartIcon.svg';
+import CardDetails from './CardDetails';
 import '../styles/startRecipe.css';
 import '../styles/doneRecipes.css';
 import '../styles/carousel.css';
@@ -95,36 +96,14 @@ export default function Details() {
     <section>
       { drink !== undefined && drink.map((data, index) => (
         <div key={ index }>
-          <img
-            className="picture-recipe"
-            data-testid="recipe-photo"
-            alt="recipe"
-            src={ data.strDrinkThumb }
+          <CardDetails
+            index={ index }
+            data={ data }
+            clipURL={ () => clipURL() }
+            shareIcon={ shareIcon }
+            SavFavRecipes={ SavFavRecipes }
+            whiteHearthIcon={ whiteHearthIcon }
           />
-          <h2 data-testid="recipe-title" className="name-recipe">{data.strDrink}</h2>
-          <div className="icons-details">
-            <button
-              type="button"
-              data-testid="share-btn"
-              onClick={ clipURL }
-              src={ shareIcon }
-            >
-              <img src={ shareIcon } alt="shareIcon" />
-            </button>
-            <button
-              type="button"
-              data-testid="favorite-btn"
-              onClick={ () => SavFavRecipes(data) }
-              src={ whiteHearthIcon }
-            >
-              <img src={ whiteHearthIcon } alt="white Heart" />
-            </button>
-          </div>
-          <h3>Category</h3>
-          <p data-testid="recipe-category">
-            {data.strCategory}
-            {data.strAlcoholic}
-          </p>
           <ol>
             { ingredients
             && ingredients.filter(
