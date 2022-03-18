@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useState, useEffect } from 'react';
 import { Carousel, CarouselItem } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
-import { mealID, drinkID } from '../Services/fetchID';
-import { drinksApiMonunt } from '../Services/drinksApi';
-import { foodsApiMount } from '../Services/ingredientsApi';
-import IngredientMeasure from '../Services/IngredientMeasure';
 import RecomendationCard from './RecomendationCard';
 import CardFoods from './CardFoods';
+import Context from '../Context/context';
 import CardDrinks from './CardDrinks';
 import SI from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -16,50 +14,27 @@ import '../styles/doneRecipes.css';
 import '../styles/carousel.css';
 
 export default function Details() {
-  const [meal, setMeal] = useState();
-  const [drink, setDrink] = useState();
+  const {
+    fetchConditional,
+    drink,
+    meal,
+    ingredients,
+    recomendations,
+    URLvideo,
+    id,
+  } = useContext(Context);
   const [name, setName] = useState();
   const [copy, setCopy] = useState(false);
-  const [id, setID] = useState();
-  const [URLvideo, setURLvideo] = useState('');
   const [redirect, setRedirect] = useState(false);
-  const [ingredients, setIngredients] = useState();
-  const [recomendations, setRecomendations] = useState();
   const [favorite, setFavorite] = useState();
   const NUM = 6;
   const SR = 'Start Recipe';
   const WHI = whiteHeartIcon;
   const BHI = blackHeartIcon;
   const localFavorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  async function fetchConditional() {
-    const url = window.location.href;
-    if (url.includes('foods')) {
-      const data = url.split('foods/');
-      const idNum = data[1];
-      setID(idNum);
-      const meals = await mealID(idNum);
-      const y = await drinksApiMonunt();
-      const { drinks } = y;
-      setRecomendations(drinks);
-      const arr = IngredientMeasure(meals);
-      setIngredients(arr);
-      const ID = (meals[0].strYoutube).split('?v=');
-      setURLvideo(ID[1]);
-      setMeal(meals);
-    } if (url.includes('drinks')) {
-      const data = url.split('drinks/');
-      const idNum = data[1];
-      setID(idNum);
-      const drinks = await drinkID(idNum);
-      const y = await foodsApiMount();
-      const { meals } = y;
-      setRecomendations(meals);
-      const arr = IngredientMeasure(drinks);
-      setIngredients(arr);
-      setDrink(drinks);
-    }
-  }
+
   useEffect(() => { fetchConditional(); }, []);
+
   function changeButton() {
     const getProcess = localStorage.getItem('inProgressRecipes');
     setName(SR);
@@ -121,7 +96,7 @@ export default function Details() {
   function toRedirect() {
     setRedirect(true);
   }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
   function verificationFavorite() {
     const local = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (local) {
