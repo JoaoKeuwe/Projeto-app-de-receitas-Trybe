@@ -27,6 +27,7 @@ function DoneRecipes() {
 
   useEffect(() => {
     setDoneRecipes(doneRecipesLocal);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -35,7 +36,7 @@ function DoneRecipes() {
         <button type="button" src={ profileIcon }>
           <img src={ profileIcon } alt="profileIcon" data-testid="profile-top-btn" />
         </button>
-        <header>Done Recipes</header>
+        <h1 data-testid="page-title">Done Recipes</h1>
       </header>
       <button
         type="button"
