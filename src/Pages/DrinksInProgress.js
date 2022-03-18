@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { drinkID } from '../Services/fetchID';
+import { handleFavorite, handleDoneRecipes } from '../Helpers/index';
 import IngredientMeasure from '../Services/IngredientMeasure';
 import whiteHearthIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -17,6 +18,7 @@ function DrinksInProgress() {
   const [cocktailsMaisId, setCocktailsMaisId] = useState([]);
   const inProgress = localStorage.getItem('inProgressRecipes');
   const inFavorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   function verificationFavorite() {
@@ -68,34 +70,9 @@ function DrinksInProgress() {
 
   const history = useHistory();
   function handleOnRecipe() {
-    return history.push('/done-recipes');
+    handleDoneRecipes(drink);
+    history.push('/done-recipes');
   }
-
-  const handleFavorite = () => {
-    setFavorite(!favorite);
-    const local = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    const obj = {
-      id: drink[0].idDrink,
-      type: 'drink',
-      nationality: '',
-      category: drink[0].strCategory,
-      alcoholicOrNot: drink[0].strAlcoholic,
-      name: drink[0].strDrink,
-      image: drink[0].strDrinkThumb,
-    };
-    const va = local.some((as) => as.id === drink[0].idDrink);
-    const vad = local.some((as) => as.id !== drink[0].idDrink);
-    const arr = local.filter((as) => as.id !== drink[0].idDrink);
-    if (local.length === 0) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([...local, obj]));
-    }
-    if (vad) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([...local, obj]));
-    }
-    if (va) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([...arr]));
-    }
-  };
 
   useEffect(() => {
     fetchConditional();
@@ -124,6 +101,12 @@ function DrinksInProgress() {
       localStorage.setItem('favoriteRecipes', JSON.stringify([]));
     }
   }, [inFavorite]);
+
+  useEffect(() => {
+    if (doneRecipes === null) {
+      localStorage.setItem('doneRecipes', JSON.stringify([]));
+    }
+  }, [doneRecipes]);
 
   useEffect(() => {
     if (cocktailsMaisId && cocktailsMaisId.length) {
@@ -157,7 +140,7 @@ function DrinksInProgress() {
           <button
             type="button"
             data-testid="favorite-btn"
-            onClick={ handleFavorite }
+            onClick={ () => handleFavorite(setFavorite, favorite, drink) }
             src={ favorite ? blackHeartIcon : whiteHearthIcon }
           >
             <img src={ favorite ? blackHeartIcon : whiteHearthIcon } alt="white Heart" />

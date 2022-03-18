@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { mealID } from '../Services/fetchID';
+import { handleDoneMeals } from '../Helpers/index';
 import IngredientMeasure from '../Services/IngredientMeasure';
 import whiteHearthIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -17,6 +18,7 @@ export default function FoodsInProgress() {
   const [isDisabled, setIsDisabled] = useState(true);
   const inProgress = localStorage.getItem('inProgressRecipes');
   const inFavorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   function verificationFavorite() {
@@ -28,7 +30,8 @@ export default function FoodsInProgress() {
   }
   const history = useHistory();
   function handleOnRecipe() {
-    return history.push('/done-recipes');
+    handleDoneMeals(meal);
+    history.push('/done-recipes');
   }
 
   async function fetchConditional() {
@@ -133,6 +136,12 @@ export default function FoodsInProgress() {
       setIsDisabled(true);
     }
   }, [mealsMaisId, ingredients]);
+
+  useEffect(() => {
+    if (doneRecipes === null) {
+      localStorage.setItem('doneRecipes', JSON.stringify([]));
+    }
+  }, [doneRecipes]);
 
   return (
     <div>
