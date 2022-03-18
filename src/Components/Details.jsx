@@ -8,7 +8,7 @@ import IngredientMeasure from '../Services/IngredientMeasure';
 import RecomendationCard from './RecomendationCard';
 import CardFoods from './CardFoods';
 import CardDrinks from './CardDrinks';
-import shareIcon from '../images/shareIcon.svg';
+import SI from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import '../styles/startRecipe.css';
@@ -144,13 +144,8 @@ export default function Details() {
           <CardDrinks index={ index } data={ data } />
           <div className="icons-details">
             {copy && (<span>Link copied!</span>)}
-            <button
-              type="button"
-              data-testid="share-btn"
-              onClick={ () => clipURL() }
-              src={ shareIcon }
-            >
-              <img src={ shareIcon } alt="shareIcon" />
+            <button type="button" data-testid="share-btn" onClick={ clipURL } src={ SI }>
+              <img src={ SI } alt="shareIcon" />
             </button>
             <button
               type="button"
@@ -161,7 +156,8 @@ export default function Details() {
               <img src={ favorite ? BHI : WHI } alt="white Heart" />
             </button>
           </div>
-          <ol>
+          <h4>Ingredients and Measures</h4>
+          <ol className="ingredients">
             { ingredients && ingredients.filter(
               ({ ingredient, measure }) => ingredient !== '' && measure !== '',
             ).map(
@@ -171,7 +167,9 @@ export default function Details() {
                 </li>),
             ) }
           </ol>
-          <p data-testid="instructions">{ data.strInstructions }</p>
+          <h4>Instructions</h4>
+          <p data-testid="instructions" className="ins">{ data.strInstructions }</p>
+          <h4>Recomendations</h4>
           <Carousel>
             {recomendations && recomendations.slice(0, NUM).map((rcard, rindex) => (
               <CarouselItem key={ rindex } className="carousel">
@@ -194,13 +192,8 @@ export default function Details() {
           <CardFoods index={ index } data={ data } />
           <div className="icons-details">
             {copy && (<span>Link copied!</span>)}
-            <button
-              type="button"
-              data-testid="share-btn"
-              onClick={ () => clipURL() }
-              src={ shareIcon }
-            >
-              <img src={ shareIcon } alt="shareIcon" />
+            <button type="button" data-testid="share-btn" onClick={ clipURL } src={ SI }>
+              <img src={ SI } alt="shareIcon" />
             </button>
             <button
               type="button"
@@ -211,6 +204,7 @@ export default function Details() {
               <img src={ favorite ? BHI : WHI } alt="white Heart" />
             </button>
           </div>
+          <h4>Ingredients and Measures</h4>
           <ol>
             { ingredients && ingredients.filter(
               ({ ingredient, measure }) => ingredient !== '' && measure !== '',
@@ -221,13 +215,16 @@ export default function Details() {
                 </li>),
             ) }
           </ol>
-          <p data-testid="instructions">{ data.strInstructions }</p>
+          <h4>Instructions</h4>
+          <p data-testid="instructions" className="ins">{ data.strInstructions }</p>
+          <h4>Recomendations</h4>
           <Carousel>
             {recomendations && recomendations.slice(0, (NUM)).map((rcardd, ind) => (
               <CarouselItem key={ ind } className="carousel">
                 <RecomendationCard key={ ind } recipe={ rcardd } index={ ind } />
               </CarouselItem>))}
           </Carousel>
+          <h4>Video</h4>
           <iframe
             className="video"
             title="iframe"
