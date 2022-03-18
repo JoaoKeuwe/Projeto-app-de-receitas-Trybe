@@ -1,14 +1,31 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { drinkID } from '../Services/fetchID';
 import IngredientMeasure from '../Services/IngredientMeasure';
+import whiteHearthIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function DrinksInProgress() {
   const [drink, setDrink] = useState();
-  const [ingredients, setIngredients] = useState();
+  const [ingredients, setIngredients] = useState([]);
   const [idd, setIdd] = useState('');
   const [localCocktails, setLocalCocktails] = useState([]);
   const [update, setUpdate] = useState(0);
+  const [copied, setCopied] = useState();
+  const [favorite, setFavorite] = useState();
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [cocktailsMaisId, setCocktailsMaisId] = useState([]);
   const inProgress = localStorage.getItem('inProgressRecipes');
+  const inFavorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  function verificationFavorite() {
+    const local = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (local) {
+      const check = local.some((e) => e.id === idd);
+      setFavorite(check);
+    }
+  }
 
   async function fetchConditional() {
     const url = window.location.href;
@@ -16,9 +33,10 @@ function DrinksInProgress() {
       const data = url.split('http://localhost:3000/drinks/');
       const idNum = data[1].split('/in-progress');
       const drinks = await drinkID(idNum[0]);
-      // const { drinks } = x;
       const arr = IngredientMeasure(drinks);
-      setIngredients(arr);
+      const newArr = arr
+        .filter(({ ingredient, measure }) => ingredient !== '' && measure !== '');
+      setIngredients(newArr);
       setDrink(drinks);
       setIdd(drinks[0].idDrink);
     }
@@ -41,6 +59,43 @@ function DrinksInProgress() {
       localStorage.setItem('inProgressRecipes', JSON.stringify(local));
     }
   }
+  function clipURL() {
+    const url = window.location.href;
+    const newUrl = url.split('/in-progress');
+    navigator.clipboard.writeText(newUrl[0]);
+    setCopied(true);
+  }
+
+  const history = useHistory();
+  function handleOnRecipe() {
+    return history.push('/done-recipes');
+  }
+
+  const handleFavorite = () => {
+    setFavorite(!favorite);
+    const local = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const obj = {
+      id: drink[0].idDrink,
+      type: 'drink',
+      nationality: '',
+      category: drink[0].strCategory,
+      alcoholicOrNot: drink[0].strAlcoholic,
+      name: drink[0].strDrink,
+      image: drink[0].strDrinkThumb,
+    };
+    const va = local.some((as) => as.id === drink[0].idDrink);
+    const vad = local.some((as) => as.id !== drink[0].idDrink);
+    const arr = local.filter((as) => as.id !== drink[0].idDrink);
+    if (local.length === 0) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([...local, obj]));
+    }
+    if (vad) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([...local, obj]));
+    }
+    if (va) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([...arr]));
+    }
+  };
 
   useEffect(() => {
     fetchConditional();
@@ -48,14 +103,36 @@ function DrinksInProgress() {
       localStorage.setItem('inProgressRecipes',
         JSON.stringify({ cocktails: {}, meals: {} }));
     }
-    if (inProgress) setLocalCocktails(Object.values(JSON.parse(inProgress).cocktails));
-  }, [inProgress]);
+    if (inProgress) {
+      setLocalCocktails(Object.values(JSON.parse(inProgress).cocktails));
+      setCocktailsMaisId(JSON.parse(inProgress).cocktails[idd]);
+    }
+  }, [inProgress, idd]);
 
   useEffect(() => {
     if (inProgress && update) {
       setLocalCocktails(Object.values(JSON.parse(inProgress).cocktails));
+      setCocktailsMaisId(JSON.parse(inProgress).cocktails[idd]);
     }
-  }, [inProgress, update]);
+  }, [inProgress, update, idd]);
+  useEffect(() => {
+    verificationFavorite();
+  }, [idd, verificationFavorite]);
+
+  useEffect(() => {
+    if (inFavorite === null) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    }
+  }, [inFavorite]);
+
+  useEffect(() => {
+    if (cocktailsMaisId && cocktailsMaisId.length) {
+      setIsDisabled(false);
+    }
+    if (cocktailsMaisId && cocktailsMaisId.length !== ingredients.length) {
+      setIsDisabled(true);
+    }
+  }, [cocktailsMaisId, ingredients]);
 
   return (
     <div>
@@ -70,8 +147,22 @@ function DrinksInProgress() {
           <h2 data-testid="recipe-title">
             {data.strDrink}
           </h2>
-          <button type="button" data-testid="share-btn"> share </button>
-          <button type="button" data-testid="favorite-btn"> favorite </button>
+          <button
+            type="button"
+            data-testid="share-btn"
+            onClick={ clipURL }
+          >
+            share
+          </button>
+          <button
+            type="button"
+            data-testid="favorite-btn"
+            onClick={ handleFavorite }
+            src={ favorite ? blackHeartIcon : whiteHearthIcon }
+          >
+            <img src={ favorite ? blackHeartIcon : whiteHearthIcon } alt="white Heart" />
+          </button>
+          {copied && (<span>Link copied!</span>)}
           <h3>Category</h3>
           <p data-testid="recipe-category">
             {data.strCategory }
@@ -82,7 +173,6 @@ function DrinksInProgress() {
           <ol>
             { ingredients
             && ingredients
-              .filter(({ ingredient, measure }) => ingredient !== '' && measure !== '')
               .map(({ ingredient, measure }, index) => (
                 <li
                   key={ index }
@@ -108,6 +198,8 @@ function DrinksInProgress() {
           <button
             type="button"
             data-testid="finish-recipe-btn"
+            disabled={ isDisabled }
+            onClick={ () => handleOnRecipe() }
           >
             Finish Recipe
           </button>
