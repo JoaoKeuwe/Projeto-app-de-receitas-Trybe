@@ -54,3 +54,8 @@ p {
   margin-top: 30px;
   width: 100%;
 }
+
+.instructions {
+  font-family: BlinkMacSystemFont , Roboto , Oxygen , Ubuntu , Cantarell , sans-serif;
+  font-size: 15px;
+}
