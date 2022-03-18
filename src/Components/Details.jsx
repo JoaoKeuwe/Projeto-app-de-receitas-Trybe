@@ -6,10 +6,11 @@ import { drinksApiMonunt } from '../Services/drinksApi';
 import { foodsApiMount } from '../Services/ingredientsApi';
 import IngredientMeasure from '../Services/IngredientMeasure';
 import RecomendationCard from './RecomendationCard';
-import SavFavRecipes from '../Services/SavFavRecipes';
+import CardFoods from './CardFoods';
+import CardDrinks from './CardDrinks';
 import shareIcon from '../images/shareIcon.svg';
-import whiteHearthIcon from '../images/whiteHeartIcon.svg';
-import CardDetails from './CardDetails';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import '../styles/startRecipe.css';
 import '../styles/doneRecipes.css';
 import '../styles/carousel.css';
@@ -18,18 +19,24 @@ export default function Details() {
   const [meal, setMeal] = useState();
   const [drink, setDrink] = useState();
   const [name, setName] = useState();
+  const [copy, setCopy] = useState(false);
+  const [id, setID] = useState();
   const [URLvideo, setURLvideo] = useState('');
   const [redirect, setRedirect] = useState(false);
   const [ingredients, setIngredients] = useState();
   const [recomendations, setRecomendations] = useState();
+  const [favorite, setFavorite] = useState();
   const NUM = 6;
   const SR = 'Start Recipe';
-
+  const WHI = whiteHeartIcon;
+  const BHI = blackHeartIcon;
+  const localFavorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
   async function fetchConditional() {
     const url = window.location.href;
     if (url.includes('foods')) {
       const data = url.split('foods/');
       const idNum = data[1];
+      setID(idNum);
       const meals = await mealID(idNum);
       const y = await drinksApiMonunt();
       const { drinks } = y;
@@ -42,6 +49,7 @@ export default function Details() {
     } if (url.includes('drinks')) {
       const data = url.split('drinks/');
       const idNum = data[1];
+      setID(idNum);
       const drinks = await drinkID(idNum);
       const y = await foodsApiMount();
       const { meals } = y;
@@ -51,72 +59,116 @@ export default function Details() {
       setDrink(drinks);
     }
   }
-
   useEffect(() => { fetchConditional(); }, []);
-
   function changeButton() {
     const getProcess = localStorage.getItem('inProgressRecipes');
-    const url = window.location.href;
     setName(SR);
-    if (getProcess === null) return false;
-    if (url.includes('drinks')) {
-      const data = url.split('drinks/');
-      const idPage = data[1];
-      const condition = getProcess.includes(idPage);
-      if (condition) {
-        setName('Continue Recipe');
-      } if (!condition) {
-        setName(SR);
-      }
-    } if (url.includes('foods')) {
-      const data = url.split('foods/');
-      const idPage = data[1];
-      const condition = getProcess.includes(idPage);
-      if (condition) {
-        setName('Continue Recipe');
-      } if (!condition) {
-        setName(SR);
-      }
+    if (getProcess === null) return setName(SR);
+    const condition = getProcess.includes(id);
+    if (condition) {
+      setName('Continue Recipe');
+    } if (!condition) {
+      setName(SR);
     }
   }
-
   useEffect(() => { changeButton(); });
-
   function clipURL() {
     const url = window.location.href;
     navigator.clipboard.writeText(url);
-    global.alert('Link copied!');
+    setCopy(true);
   }
-
+  const handleFavoriteDrinks = () => {
+    setFavorite(!favorite);
+    const local = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (drink) {
+      const obj = { id: drink[0].idDrink,
+        type: 'drink',
+        nationality: '',
+        category: drink[0].strCategory,
+        alcoholicOrNot: drink[0].strAlcoholic,
+        name: drink[0].strDrink,
+        image: drink[0].strDrinkThumb };
+      const va = local.some((as) => as.id === drink[0].idDrink);
+      const vad = local.some((as) => as.id !== drink[0].idDrink);
+      const arr = local.filter((as) => as.id !== drink[0].idDrink);
+      if (local.length === 0) {
+        localStorage.setItem('favoriteRecipes', JSON.stringify([...local, obj]));
+      } if (vad) {
+        localStorage.setItem('favoriteRecipes', JSON.stringify([...local, obj]));
+      } if (va) {
+        localStorage.setItem('favoriteRecipes', JSON.stringify([...arr]));
+      }
+    } if (meal) {
+      const obj = { id: meal[0].idMeal,
+        type: 'food',
+        nationality: meal[0].strArea,
+        category: meal[0].strCategory,
+        alcoholicOrNot: '',
+        name: meal[0].strMeal,
+        image: meal[0].strMealThumb };
+      const va = local.some((as) => as.id === meal[0].idMeal);
+      const vad = local.some((as) => as.id !== meal[0].idMeal);
+      const arr = local.filter((as) => as.id !== meal[0].idMeal);
+      if (local.length === 0) {
+        localStorage.setItem('favoriteRecipes', JSON.stringify([...local, obj]));
+      } if (vad) {
+        localStorage.setItem('favoriteRecipes', JSON.stringify([...local, obj]));
+      } if (va) {
+        localStorage.setItem('favoriteRecipes', JSON.stringify([...arr]));
+      }
+    }
+  };
   function toRedirect() {
     setRedirect(true);
   }
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  function verificationFavorite() {
+    const local = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (local) {
+      const check = local.some((e) => e.id === id);
+      setFavorite(check);
+    }
+  }
+  useEffect(() => {
+    verificationFavorite();
+  }, [id, verificationFavorite]);
+  useEffect(() => {
+    if (localFavorite === null) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    }
+  }, [localFavorite]);
   return (
     <section>
       { drink !== undefined && drink.map((data, index) => (
         <div key={ index }>
-          <CardDetails
-            index={ index }
-            data={ data }
-            clipURL={ () => clipURL() }
-            shareIcon={ shareIcon }
-            SavFavRecipes={ SavFavRecipes }
-            whiteHearthIcon={ whiteHearthIcon }
-          />
+          <CardDrinks index={ index } data={ data } />
+          <div className="icons-details">
+            {copy && (<span>Link copied!</span>)}
+            <button
+              type="button"
+              data-testid="share-btn"
+              onClick={ () => clipURL() }
+              src={ shareIcon }
+            >
+              <img src={ shareIcon } alt="shareIcon" />
+            </button>
+            <button
+              type="button"
+              data-testid="favorite-btn"
+              onClick={ handleFavoriteDrinks }
+              src={ favorite ? BHI : WHI }
+            >
+              <img src={ favorite ? BHI : WHI } alt="white Heart" />
+            </button>
+          </div>
           <ol>
-            { ingredients
-            && ingredients.filter(
+            { ingredients && ingredients.filter(
               ({ ingredient, measure }) => ingredient !== '' && measure !== '',
             ).map(
-              ({ ingredient, measure }, indexx) => (
-                <li
-                  key={ indexx }
-                  data-testid={ `${indexx}-ingredient-name-and-measure` }
-                >
+              ({ ingredient, measure }, x) => (
+                <li key={ x } data-testid={ `${x}-ingredient-name-and-measure` }>
                   {`${ingredient} - ${measure}`}
-                </li>
-              ),
+                </li>),
             ) }
           </ol>
           <p data-testid="instructions">{ data.strInstructions }</p>
@@ -124,8 +176,7 @@ export default function Details() {
             {recomendations && recomendations.slice(0, NUM).map((rcard, rindex) => (
               <CarouselItem key={ rindex } className="carousel">
                 <RecomendationCard key={ rindex } index={ rindex } recipe={ rcard } />
-              </CarouselItem>
-            ))}
+              </CarouselItem>))}
           </Carousel>
           <button
             className="start-recipe"
@@ -140,59 +191,42 @@ export default function Details() {
       ))}
       {meal !== undefined && meal.map((data, index) => (
         <div key={ index }>
-          <img
-            width="100px"
-            data-testid="recipe-photo"
-            alt="recipe"
-            src={ data.strMealThumb }
-          />
-          <h2 data-testid="recipe-title">{data.strMeal}</h2>
-          <hr className="hr" />
+          <CardFoods index={ index } data={ data } />
           <div className="icons-details">
+            {copy && (<span>Link copied!</span>)}
             <button
               type="button"
               data-testid="share-btn"
+              onClick={ () => clipURL() }
               src={ shareIcon }
-              onClick={ clipURL }
             >
               <img src={ shareIcon } alt="shareIcon" />
             </button>
             <button
               type="button"
               data-testid="favorite-btn"
-              onClick={ () => SavFavRecipes(data) }
-              src={ whiteHearthIcon }
+              onClick={ handleFavoriteDrinks }
+              src={ favorite ? BHI : WHI }
             >
-              <img src={ whiteHearthIcon } alt="heartIcon" />
+              <img src={ favorite ? BHI : WHI } alt="white Heart" />
             </button>
           </div>
-          <p data-testid="recipe-category" className="name-category">
-            {data.strCategory}
-            {data.strAlcoholic}
-          </p>
           <ol>
-            { ingredients
-            && ingredients.filter(
+            { ingredients && ingredients.filter(
               ({ ingredient, measure }) => ingredient !== '' && measure !== '',
             ).map(
-              ({ ingredient, measure }, indexxx) => (
-                <li
-                  key={ indexxx }
-                  data-testid={ `${indexxx}-ingredient-name-and-measure` }
-                >
+              ({ ingredient, measure }, i) => (
+                <li key={ i } data-testid={ `${i}-ingredient-name-and-measure` }>
                   {`${ingredient} - ${measure}`}
-                </li>
-              ),
+                </li>),
             ) }
           </ol>
           <p data-testid="instructions">{ data.strInstructions }</p>
           <Carousel>
-            {recomendations
-              && recomendations.slice(0, (NUM)).map((rcardd, ind) => (
-                <CarouselItem key={ ind } className="carousel">
-                  <RecomendationCard key={ ind } recipe={ rcardd } index={ ind } />
-                </CarouselItem>
-              ))}
+            {recomendations && recomendations.slice(0, (NUM)).map((rcardd, ind) => (
+              <CarouselItem key={ ind } className="carousel">
+                <RecomendationCard key={ ind } recipe={ rcardd } index={ ind } />
+              </CarouselItem>))}
           </Carousel>
           <iframe
             className="video"

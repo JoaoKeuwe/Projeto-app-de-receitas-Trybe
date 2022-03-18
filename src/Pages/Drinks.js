@@ -11,7 +11,7 @@ import RecipeCard from '../Components/RecipeCard';
 import '../styles/drink&food.css';
 
 function Drinks() {
-  const { recipes } = useContext(Context);
+  const { recipes, filterIngredients } = useContext(Context);
   const [drinksMount, setDrinksMount] = useState();
   const [redirectId, setRedirectId] = useState(false);
   const [drinkCategory, setDrinkCategory] = useState('');
@@ -49,6 +49,9 @@ function Drinks() {
   }
   const TWELVE = 12;
   const FIVE = 5;
+  useEffect(() => {
+    setDrinksMount(filterIngredients);
+  }, [filterIngredients]);
   useEffect(() => {
     handleDrinks();
     handleDrinkCategory();
