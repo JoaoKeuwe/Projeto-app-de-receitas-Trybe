@@ -6,6 +6,8 @@ function Provider({ children }) {
   const [fetchSearch, setFetchSearch] = useState('');
   const [fetchRadio, setFetchRadio] = useState('');
   const [recipes, setRecipes] = useState('');
+  const [filterIngredients, setFilterIngredients] = useState([]);
+  console.log(filterIngredients);
 
   function handleRecipes(param) {
     if (param && Object.keys(param).includes('drinks')) {
@@ -30,6 +32,8 @@ function Provider({ children }) {
     fetchRadio,
     fetchSearch,
     recipes,
+    filterIngredients,
+    setFilterIngredients,
   };
   return (
     <Context.Provider value={ context }>

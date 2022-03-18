@@ -11,7 +11,7 @@ import RecipeCard from '../Components/RecipeCard';
 import '../styles/drink&food.css';
 
 export default function Foods() {
-  const { recipes } = useContext(Context);
+  const { recipes, filterIngredients } = useContext(Context);
   const [foodsMount, setFoodsMount] = useState();
   const [redirectId, setRedirectId] = useState(false);
   const [foodCategory, setFoodCategory] = useState('');
@@ -48,6 +48,11 @@ export default function Foods() {
   }
   const TWELVE = 12;
   const FIVE = 5;
+
+  useEffect(() => {
+    setFoodsMount(filterIngredients);
+  }, [filterIngredients]);
+
   useEffect(() => {
     handleFoods();
     handleFoodCategory();
@@ -95,6 +100,7 @@ export default function Foods() {
         )) }
       </div>
       <div className="divFoods">
+        {console.log(foodsMount)}
         { recipes
         && recipes.slice(0, TWELVE).map((food, index) => (
           handleRecipeCard(food, index)
